@@ -1,0 +1,5581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>College Credit Bank & Event Management</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background: #f1f5f9;
+    color: #1e293b;
+}
+
+/* =========================
+   LOGIN
+========================= */
+.login-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 30px 20px;
+    position: relative;
+    overflow: hidden;
+    background: #1f2937;
+}
+
+/* Campus photo background: slightly blurred so login content stays readable */
+.login-page::before {
+    content: "";
+    position: absolute;
+    inset: -10px;
+    background-image:
+        linear-gradient(
+            rgba(20, 28, 40, 0.28),
+            rgba(20, 28, 40, 0.28)
+        ),
+        url("campus-background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    filter: blur(3px);
+    transform: scale(1.02);
+    z-index: 0;
+}
+
+.login-page::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.06);
+    z-index: 0;
+}
+
+.login-box {
+    width: 100%;
+    max-width: 520px;
+    position: relative;
+    z-index: 1;
+}
+
+.college-header {
+    text-align: center;
+    color: white;
+    margin-bottom: 25px;
+}
+
+.logo {
+    width: 75px;
+    height: 75px;
+    background: white;
+    color: #2563eb;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    font-size: 27px;
+    font-weight: 800;
+}
+
+.college-header h1 {
+    margin-top: 15px;
+    font-size: 25px;
+}
+
+.college-header p {
+    margin-top: 6px;
+    opacity: .85;
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.25);
+    padding: 22px;
+    border-radius: 20px;
+
+    border: 2px solid rgba(128, 0, 0, 0.45);
+
+    box-shadow:
+        0 15px 50px rgba(0, 0, 0, 0.30);
+
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+
+.login-card h2 {
+    text-align: center;
+    margin-bottom: 8px;
+}
+
+.login-description {
+    text-align: center;
+    color: #5f0606;
+    margin-bottom: 22px;
+}
+.welcome-title {
+    text-align: center;
+    color: #800000;
+    font-size: 28px;
+    font-weight: 800;
+    margin-bottom: 15px;
+
+    text-shadow:
+        0 2px 4px rgba(255, 255, 255, 0.8);
+}
+.role-tabs {
+    display: flex;
+    gap: 5px;
+    background: #f1f5f9;
+    padding: 5px;
+    border-radius: 10px;
+    margin-bottom: 22px;
+}
+
+.role-tabs button {
+    flex: 1;
+    padding: 10px 5px;
+    border: none;
+    background: transparent;
+    border-radius: 7px;
+    cursor: pointer;
+    color: #64748b;
+    font-weight: 600;
+}
+
+.role-tabs button.active {
+    background: #800000;
+    color: white;
+}
+
+.form-group {
+    margin-bottom: 17px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 7px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.password-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.password-wrapper input {
+    padding-right: 45px;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    font-size: 19px;
+    padding: 2px;
+    color: #64748b;
+}
+
+.toggle-password:hover {
+    color: #800000;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
+    outline: none;
+    font-size: 14px;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: #800000;
+    box-shadow: 0 0 0 2px rgba(128, 0, 0, 0.12);
+}
+
+.btn {
+    border: none;
+    padding: 11px 17px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.btn-primary {
+    background: #800000;
+    color: white;
+}
+
+.btn-primary:hover {
+    background: #660000;
+}
+
+.btn-success {
+    background: #16a34a;
+    color: white;
+}
+
+.btn-danger {
+    background: #dc2626;
+    color: white;
+}
+
+.btn-secondary {
+    background: #e2e8f0;
+    color: #334155;
+}
+
+.full-btn {
+    width: 100%;
+    padding: 13px;
+    font-size: 15px;
+}
+
+.demo-info {
+    margin-top: 18px;
+    padding: 12px;
+    border-radius: 8px;
+    background: #eff6ff;
+    color: #475569;
+    font-size: 12px;
+}
+
+/* =========================
+   APP
+========================= */
+
+.app {
+    display: none;
+    min-height: 100vh;
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 250px;
+    background: #0f172a;
+    color: white;
+    padding: 22px 14px;
+    z-index: 10;
+}
+
+.sidebar-brand {
+    text-align: center;
+    padding-bottom: 28px;
+}
+
+.sidebar-brand .mini-logo {
+    width: 72px;
+    height: 72px;
+    object-fit: contain;
+    display: block;
+    margin: auto;
+    background: transparent;
+    filter: drop-shadow(0 3px 7px rgba(0,0,0,.18));
+}
+
+.sidebar-brand h3 {
+    margin-top: 10px;
+    font-size: 17px;
+}
+
+.nav-item {
+    display: block;
+    padding: 13px 14px;
+    color: #cbd5e1;
+    border-radius: 8px;
+    margin-bottom: 5px;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.nav-item:hover,
+.nav-item.active {
+    background: #2563eb;
+    color: white;
+}
+
+.logout {
+    position: absolute;
+    left: 14px;
+    right: 14px;
+    bottom: 20px;
+    background: #dc2626;
+    color: white;
+}
+
+.main {
+    margin-left: 250px;
+    padding: 25px;
+}
+
+.topbar {
+    background: white;
+    border-radius: 12px;
+    padding: 17px 22px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.04);
+}
+
+.topbar h2 {
+    font-size: 23px;
+}
+
+.topbar p {
+    color: #64748b;
+    margin-top: 4px;
+}
+
+.user {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.avatar {
+    width: 42px;
+    height: 42px;
+    background: #dbeafe;
+    color: #2563eb;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+}
+
+/* =========================
+   SECTIONS
+========================= */
+
+.section {
+    display: none;
+}
+
+.section.active {
+    display: block;
+}
+
+/* =========================
+   STAT CARDS
+========================= */
+
+.stats {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.stats-3 {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-bottom: 22px;
+}
+
+.stat-card {
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.04);
+}
+
+.stat-icon {
+    width: 43px;
+    height: 43px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 9px;
+    margin-bottom: 12px;
+    font-size: 20px;
+}
+
+.blue {
+    background: #dbeafe;
+    color: #2563eb;
+}
+
+.green {
+    background: #dcfce7;
+    color: #16a34a;
+}
+
+.orange {
+    background: #ffedd5;
+    color: #ea580c;
+}
+
+.purple {
+    background: #f3e8ff;
+    color: #9333ea;
+}
+
+.stat-card h2 {
+    font-size: 27px;
+}
+
+.stat-card p {
+    color: #64748b;
+    font-size: 14px;
+}
+
+/* =========================
+   PANELS
+========================= */
+
+.panel {
+    background: white;
+    border-radius: 12px;
+    padding: 22px;
+    box-shadow: 0 2px 10px rgba(0,0,0,.04);
+    margin-bottom: 20px;
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.panel-header h3 {
+    font-size: 18px;
+}
+
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+/* =========================
+   TABLE
+========================= */
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 12px 10px;
+    border-bottom: 1px solid #e2e8f0;
+    text-align: left;
+    font-size: 14px;
+}
+
+th {
+    color: #64748b;
+}
+
+.badge {
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.badge-green {
+    background: #dcfce7;
+    color: #15803d;
+}
+
+.badge-blue {
+    background: #dbeafe;
+    color: #1d4ed8;
+}
+
+.badge-red {
+    background: #fee2e2;
+    color: #b91c1c;
+}
+
+.badge-orange {
+    background: #ffedd5;
+    color: #c2410c;
+}
+
+/* =========================
+   EVENT CARDS
+========================= */
+
+.event-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.event-card {
+    background: white;
+    border-radius: 13px;
+    overflow: hidden;
+    box-shadow: 0 3px 12px rgba(0,0,0,.06);
+}
+
+.event-top {
+    background: linear-gradient(135deg,#1d4ed8,#2563eb);
+    color: white;
+    padding: 20px;
+}
+
+.event-top h3 {
+    margin-bottom: 7px;
+}
+
+.event-body {
+    padding: 18px;
+}
+
+.event-detail {
+    margin-bottom: 9px;
+    color: #475569;
+    font-size: 14px;
+}
+
+.event-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 13px;
+    border-top: 1px solid #e2e8f0;
+    margin-top: 13px;
+}
+
+/* =========================
+   ATTENDANCE
+========================= */
+
+.attendance-present {
+    background: #dcfce7 !important;
+    color: #15803d !important;
+}
+
+.attendance-absent {
+    background: #fee2e2 !important;
+    color: #b91c1c !important;
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(15,23,42,.6);
+    z-index: 10000;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.modal-content {
+    position: relative;
+    z-index: 10001;
+    pointer-events: auto;
+    background: white;
+    width: 100%;
+    max-width: 600px;
+    border-radius: 14px;
+    padding: 25px;
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.close {
+    border: none;
+    background: none;
+    font-size: 25px;
+    cursor: pointer;
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media(max-width: 1100px) {
+    .stats {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .stats-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .event-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 750px) {
+
+    .sidebar {
+        width: 70px;
+        padding: 15px 7px;
+    }
+
+    .sidebar-brand h3,
+    .nav-item span {
+        display: none;
+    }
+
+    .main {
+        margin-left: 70px;
+        padding: 15px;
+    }
+
+    .stats {
+        grid-template-columns: 1fr;
+    }
+
+    .stats-3 {
+        grid-template-columns: 1fr;
+    }
+
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .event-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .topbar {
+        align-items: flex-start;
+    }
+}
+
+@media print {
+    body > * { display: none !important; }
+    #adminApp { display: block !important; }
+    #adminApp .sidebar, #adminApp .topbar { display: none !important; }
+    #adminApp .main { margin: 0 !important; padding: 0 !important; }
+    #adminApp .section { display: none !important; }
+    #adminStudentReport { display: block !important; }
+    #adminStudentReport > .panel { box-shadow: none !important; padding: 0 !important; }
+    #adminStudentReport .panel-header { display: none !important; }
+    #studentReportPrintable { display: block !important; }
+    button { display: none !important; }
+}
+
+/* College Credit Bank maroon branding */
+.college-header { text-align:center; color:#800000; margin-bottom:25px; }
+.college-brand { display:flex; flex-direction:column; align-items:center; justify-content:center; margin-bottom:18px; text-shadow:0 2px 8px rgba(255,255,255,.8); }
+.college-brand-logo { width:150px; height:130px; object-fit:contain; background:transparent; display:block; filter: drop-shadow(0 4px 8px rgba(80,0,0,.18)); }
+.college-brand h1 { margin-top:2px; font-size:30px; line-height:1.1; font-weight:800; color:#800000; letter-spacing:.2px; }
+.college-brand .tagline { margin-top:7px; font-size:16px; font-weight:700; letter-spacing:2px; color:#800000; }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head>
+
+<body>
+
+
+<!-- =====================================================
+     LOGIN PAGE
+===================================================== -->
+
+<div class="login-page" id="loginPage">
+
+    <div class="login-box">
+
+        <div class="college-header">
+            <div class="college-brand">
+                <img class="college-brand-logo" src="college-credit-logo.png" alt="College Credit Bank logo">
+            </div>
+        </div>
+
+        <div class="login-card">
+<h1 class="welcome-title">WELCOME</h1>
+
+
+            <h2 id="loginHeading">Admin Login</h2>
+
+            <p class="login-description">
+                Sign in to continue to your portal
+            </p>
+
+
+            <div class="role-tabs">
+
+                <button
+                    id="adminRole"
+                    class="active"
+                    onclick="selectRole('admin')">
+                    Admin
+                </button>
+
+                <button
+                    id="teacherRole"
+                    onclick="selectRole('teacher')">
+                    Teacher
+                </button>
+
+                <button
+                    id="studentRole"
+                    onclick="selectRole('student')">
+                    Student
+                </button>
+
+            </div>
+
+
+            <form onsubmit="login(event)">
+
+                <div class="form-group">
+
+                    <label>Email</label>
+
+                    <input
+                        type="email"
+                        id="loginEmail"
+                        placeholder="Enter admin email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>Password</label>
+
+                    <div class="password-wrapper">
+                        <input
+                            type="password"
+                            id="loginPassword"
+                            placeholder="Enter password"
+                            required
+                        >
+                        <button
+                            type="button"
+                            class="toggle-password"
+                            id="togglePassword"
+                            onclick="togglePasswordVisibility()"
+                            aria-label="Show password"
+                            title="Show password"
+                        >👁️</button>
+                    </div>
+
+                </div>
+
+
+                <button class="btn btn-primary full-btn">
+                    Sign In
+                </button>
+
+            </form>
+
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     ADMIN APPLICATION
+===================================================== -->
+
+<div class="app" id="adminApp">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <img class="mini-logo" src="college-credit-logo.png" alt="College Credit Bank logo">
+
+            <h3>Credit Bank</h3>
+
+        </div>
+
+
+        <a class="nav-item active"
+           onclick="adminSection('adminDashboard',this)">
+            📊 <span>Dashboard</span>
+        </a>
+
+        <a class="nav-item"
+           onclick="adminSection('adminStudents',this)">
+            👨‍🎓 <span>Students</span>
+        </a>
+
+        <a class="nav-item"
+           onclick="adminSection('adminEvents',this)">
+            📅 <span>Events</span>
+        </a>
+
+        <a class="nav-item"
+           onclick="adminSection('adminCredits',this)">
+            🎓 <span>Credits</span>
+        </a>
+
+        <a class="nav-item"
+           onclick="adminSection('adminInterCollege',this)">
+            🌐 <span>Inter-College Approvals</span>
+        </a>
+
+        <button type="button" class="nav-item logout" onclick="logout()">🚪 <span>Logout</span></button>
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <div>
+                <h2>Admin Dashboard</h2>
+                <p>College Credit & Event Management</p>
+            </div>
+
+            <div class="user">
+
+                <div class="avatar" id="adminAvatar">AD</div>
+
+                <div>
+                    <strong id="adminNameTop">Administrator</strong><br>
+                    <small id="adminRoleTop">Admin</small>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- ADMIN DASHBOARD -->
+
+        <section id="adminDashboard" class="section active">
+
+            <div class="stats-3">
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">👨‍🎓</div>
+                    <h2 id="adminStudentCount">0</h2>
+                    <p>Total Students</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">📅</div>
+                    <h2 id="adminEventCount">1</h2>
+                    <p>Total Events</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">📝</div>
+                    <h2 id="adminRegistrationCount">0</h2>
+                    <p>Registrations</p>
+                </div>
+
+            </div>
+
+
+            <div class="grid-2">
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <h3>Students</h3>
+                    </div>
+
+                    <div class="table-wrapper">
+
+                        <table>
+
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Course</th>
+                                    <th>Semester</th>
+                                    <th>Credits</th>
+                                    <th>Report</th>
+                                </tr>
+                            </thead>
+
+                            <tbody id="adminStudentTable"></tbody>
+
+                        </table>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel">
+
+                    <div class="panel-header">
+                        <h3>Upcoming Events</h3>
+                    </div>
+
+                    <div id="adminUpcomingEvents"></div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ADMIN STUDENTS -->
+
+        <section id="adminStudents" class="section">
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>Student Management</h3>
+
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Student ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Course</th>
+                                <th>Semester</th>
+                                <th>Credits</th>
+                                <th>Report</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="studentManagementTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ADMIN INDIVIDUAL STUDENT REPORT -->
+        <section id="adminStudentReport" class="section">
+            <div class="panel">
+                <div class="panel-header" style="gap:12px;flex-wrap:wrap">
+                    <div>
+                        <h3>Individual Student Report</h3>
+                        <p style="color:#64748b;margin-top:5px">Participation report for the selected student.</p>
+                    </div>
+                    <div style="display:flex;gap:8px;flex-wrap:wrap">
+                        <button class="btn btn-secondary" onclick="backToAdminStudents()">← Back to Students</button>
+                        <button class="btn btn-primary" onclick="exportStudentReportPDF()">📄 Export PDF</button>
+                    </div>
+                </div>
+                <div id="studentReportArea"></div>
+            </div>
+        </section>
+
+
+        <!-- ADMIN EVENTS -->
+
+        <section id="adminEvents" class="section">
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>Event Management</h3>
+
+                    <button
+                        class="btn btn-primary"
+                        onclick="openEventModal()">
+                        + Create Event
+                    </button>
+
+                </div>
+
+                <div id="adminEventList"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- ADMIN INTER-COLLEGE APPROVALS -->
+
+        <section id="adminInterCollege" class="section">
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Inter-College Event Records</h3>
+                        <p style="color:#64748b;margin-top:5px">Approved records routed to your selected mentor in-charge.</p>
+                    </div>
+                    <span class="badge badge-green" id="adminInterCollegeCount">0 Approved</span>
+                </div>
+                <div id="adminInterCollegeArea"></div>
+            </div>
+        </section>
+
+
+        <!-- ADMIN CREDITS -->
+
+        <section id="adminCredits" class="section">
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h3>Credit Transaction History</h3>
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Student</th>
+                                <th>Activity</th>
+                                <th>Credits</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="adminCreditTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+     TEACHER APPLICATION
+===================================================== -->
+
+<div class="app" id="teacherApp">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <img class="mini-logo" src="college-credit-logo.png" alt="College Credit Bank logo">
+
+            <h3>Teacher Portal</h3>
+
+        </div>
+
+
+        <a class="nav-item active"
+           onclick="teacherSection('teacherDashboard',this)">
+            📊 <span>Dashboard</span>
+        </a>
+
+        <a class="nav-item" onclick="openEventModal()">
+            ➕ <span>Create Event</span>
+        </a>
+
+        <a class="nav-item" onclick="teacherSection('teacherRegistrations',this)">
+            👨‍🎓 <span>Registrations</span>
+        </a>
+
+        <a class="nav-item" onclick="teacherSection('teacherInterCollege',this)">
+            🌐 <span>Inter-College Reviews</span>
+        </a>
+
+        <a class="nav-item"
+           onclick="teacherSection('teacherAttendance',this)">
+            📋 <span>Attendance</span>
+        </a>
+
+        <button type="button" class="nav-item logout" onclick="logout()">🚪 <span>Logout</span></button>
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <div>
+                <h2>Teacher Dashboard</h2>
+                <p>Event Attendance Management</p>
+            </div>
+
+            <div class="user">
+
+                <div class="avatar" id="teacherAvatar">TC</div>
+
+                <div>
+                    <strong id="teacherNameTop">Teacher</strong><br>
+                    <small id="teacherRoleTop">Faculty</small>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <section id="teacherDashboard" class="section active">
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">📅</div>
+                    <h2 id="teacherEventCount">1</h2>
+                    <p>Events</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">👨‍🎓</div>
+                    <h2 id="teacherRegistrationCount">0</h2>
+                    <p>Registrations</p>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h3>Events Requiring Attendance</h3>
+                </div>
+
+                <div id="teacherEventList"></div>
+
+            </div>
+
+        </section>
+
+
+        <section id="teacherRegistrations" class="section">
+            <div class="panel">
+                <div class="panel-header">
+                    <h3>Event Registrations</h3>
+                    <select id="teacherRegistrationEventSelect" onchange="loadTeacherRegistrations()"></select>
+                </div>
+                <div id="teacherRegistrationArea"></div>
+            </div>
+        </section>
+
+
+        <section id="teacherInterCollege" class="section">
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Inter-College Event Reviews</h3>
+                        <p style="color:#64748b;margin-top:5px">Open the certificates, verify the details and award credits.</p>
+                    </div>
+                    <span class="badge badge-orange" id="teacherInterCollegeCount">0 Pending</span>
+                </div>
+                <div id="teacherInterCollegeArea"></div>
+            </div>
+        </section>
+
+
+        <section id="teacherAttendance" class="section">
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>Take Event Attendance</h3>
+
+                    <select id="attendanceEventSelect"
+                            onchange="loadAttendance()">
+                    </select>
+
+                </div>
+
+
+                <div id="attendanceArea"></div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+     STUDENT APPLICATION
+===================================================== -->
+
+<div class="app" id="studentApp">
+
+    <aside class="sidebar">
+
+        <div class="sidebar-brand">
+
+            <img class="mini-logo" src="college-credit-logo.png" alt="College Credit Bank logo">
+
+            <h3>Student Portal</h3>
+
+        </div>
+
+
+        <a class="nav-item active"
+           onclick="studentSection('studentDashboard',this)">
+            📊 <span>Dashboard</span>
+        </a>
+
+        <a class="nav-item"
+           onclick="studentSection('studentEvents',this)">
+            📅 <span>Events</span>
+        </a>
+
+        <a class="nav-item"
+           onclick="studentSection('studentInterCollege',this)">
+            🌐 <span>Inter-College Events</span>
+        </a>
+
+        <a class="nav-item"
+           onclick="studentSection('studentCredits',this)">
+            🎓 <span>My Credits</span>
+        </a>
+
+        <a class="nav-item"
+           onclick="studentSection('studentHistory',this)">
+            📜 <span>Credit History</span>
+        </a>
+
+        <button type="button" class="nav-item logout" onclick="logout()">🚪 <span>Logout</span></button>
+
+    </aside>
+
+
+    <main class="main">
+
+        <div class="topbar">
+
+            <div>
+                <h2 id="studentWelcome">Student Dashboard</h2>
+                <p>Credit Bank & Events</p>
+            </div>
+
+            <div class="user">
+
+                <div class="avatar" id="studentAvatar">ST</div>
+
+                <div>
+                    <strong id="studentNameTop">Student</strong><br>
+                    <small id="studentIdTop">Student ID</small><br>
+                    <small id="studentCourseSemesterTop"></small>
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- STUDENT DASHBOARD -->
+
+        <section id="studentDashboard" class="section active">
+
+            <div class="stats">
+
+                <div class="stat-card">
+                    <div class="stat-icon blue">🎓</div>
+                    <h2 id="myCredits">0</h2>
+                    <p>Current Credits</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon green">📅</div>
+                    <h2 id="myEvents">0</h2>
+                    <p>Registered Events</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon orange">✓</div>
+                    <h2 id="myAttended">0</h2>
+                    <p>Events Attended</p>
+                </div>
+
+                <div class="stat-card">
+                    <div class="stat-icon purple">📈</div>
+                    <h2 id="myEventCredits">0</h2>
+                    <p>Event Credits</p>
+                </div>
+
+            </div>
+
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h3>My Recent Credit Transactions</h3>
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Activity</th>
+                                <th>Credits</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="studentRecentCredits"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- STUDENT EVENTS -->
+
+        <section id="studentEvents" class="section">
+
+            <div class="panel">
+
+                <div class="panel-header">
+
+                    <h3>Available Events</h3>
+
+                </div>
+
+                <div class="event-grid" id="studentEventGrid"></div>
+
+            </div>
+
+        </section>
+
+
+        <!-- STUDENT INTER-COLLEGE EVENTS -->
+
+        <section id="studentInterCollege" class="section">
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Inter-College Events</h3>
+                        <p style="color:#64748b;margin-top:5px">Submit your inter-college fest/event details and certificates for credit verification.</p>
+                    </div>
+                </div>
+
+                <form id="interCollegeForm" onsubmit="submitInterCollegeEvent(event)">
+                    <div class="grid-2">
+                        <div class="form-group"><label>College Name</label><input type="text" id="icCollegeName" required placeholder="Enter college name"></div>
+                        <div class="form-group"><label>Fest Name</label><input type="text" id="icFestName" required placeholder="Enter fest name"></div>
+                    </div>
+                    <div class="grid-2">
+                        <div class="form-group"><label>Event Name</label><input type="text" id="icEventName" required placeholder="Enter event name"></div>
+                        <div class="form-group"><label>Teacher In-charge</label><select id="icTeacherIncharge" required></select></div>
+                    </div>
+                    <div class="form-group"><label>Mentor In-charge</label><select id="icMentorIncharge" required></select></div>
+
+                    <div class="grid-2">
+                        <div class="form-group">
+                            <label>Winning Certificate <span style="color:#64748b;font-weight:400">(optional, max 200 KB)</span></label>
+                            <div style="display:flex;align-items:center;gap:8px">
+                                <input type="file" id="icWinningCertificate" accept="image/*" onchange="validateCertificateFile(this)" style="flex:1">
+                                <button type="button" id="icWinningCertificateRemove" onclick="removeCertificateFile('icWinningCertificate')" style="display:none" class="btn btn-secondary" title="Remove selected file">✕</button>
+                            </div>
+                            <small style="color:#64748b">Upload if you won the event.</small>
+                        </div>
+                        <div class="form-group">
+                            <label>Participation Certificate <span style="color:#64748b;font-weight:400">(optional, max 200 KB)</span></label>
+                            <div style="display:flex;align-items:center;gap:8px">
+                                <input type="file" id="icParticipationCertificate" accept="image/*" onchange="validateCertificateFile(this)" style="flex:1">
+                                <button type="button" id="icParticipationCertificateRemove" onclick="removeCertificateFile('icParticipationCertificate')" style="display:none" class="btn btn-secondary" title="Remove selected file">✕</button>
+                            </div>
+                            <small style="color:#64748b">Upload if you participated.</small>
+                        </div>
+                    </div>
+                    <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:10px;padding:12px;margin-bottom:16px;color:#9a3412;font-size:13px">
+                        At least one certificate is recommended. Each image must be an image file smaller than 200 KB.
+                    </div>
+                    <button type="submit" class="btn btn-primary full-btn">Submit Inter-College Event</button>
+                </form>
+            </div>
+
+            <div class="panel" style="margin-top:20px">
+                <div class="panel-header"><h3>My Inter-College Submissions</h3></div>
+                <div id="studentInterCollegeArea"></div>
+            </div>
+        </section>
+
+
+        <!-- STUDENT CREDITS -->
+
+        <section id="studentCredits" class="section">
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h3>My Credits</h3>
+                </div>
+
+                <div class="stats">
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon blue">🎓</div>
+
+                        <h2 id="creditsPageTotal">120</h2>
+
+                        <p>Total Credits</p>
+
+                    </div>
+
+                    <div class="stat-card">
+
+                        <div class="stat-icon green">📅</div>
+
+                        <h2 id="creditsPageEvent">0</h2>
+
+                        <p>Event Credits</p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- STUDENT HISTORY -->
+
+        <section id="studentHistory" class="section">
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h3>Complete Credit History</h3>
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table>
+
+                        <thead>
+
+                            <tr>
+                                <th>Date</th>
+                                <th>Activity</th>
+                                <th>Type</th>
+                                <th>Credits</th>
+                                <th>Balance</th>
+                            </tr>
+
+                        </thead>
+
+                        <tbody id="studentHistoryTable"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- =====================================================
+     CREATE EVENT MODAL
+===================================================== -->
+
+<div class="modal" id="studentHistoryModal">
+    <div class="modal-content" style="max-width:1100px;max-height:90vh;overflow:auto">
+        <div class="modal-header"><h2 id="studentHistoryTitle">Student Dashboard</h2><button class="close" onclick="closeStudentHistory()">×</button></div>
+        <div id="studentHistoryBody"></div>
+    </div>
+</div>
+
+<div class="modal" id="eventModal">
+    <div class="modal-content">
+        <div class="modal-header"><h2>Create New Event</h2><button class="close" onclick="closeEventModal()">×</button></div>
+        <form id="createEventForm">
+            <div class="form-group"><label>Event Name</label><input type="text" id="eventName" required></div>
+            <div class="form-group"><label>Event In-charge Teacher</label><select id="eventInchargeTeacher" required></select></div>
+            <div class="form-group"><label>Teacher Contact Number</label><input type="tel" id="eventContact" pattern="[0-9]{10}" maxlength="10" required></div>
+            <div class="form-group"><label>Event Date</label><input type="date" id="eventDate" required></div>
+            <div class="grid-2">
+                <div class="form-group"><label>Start Time</label><input type="time" id="eventStartTime" required></div>
+                <div class="form-group"><label>End Time</label><input type="time" id="eventEndTime" required></div>
+            </div>
+            <div class="form-group"><label>Venue</label><input type="text" id="eventVenue" required></div>
+            <div class="grid-2">
+                <div class="form-group"><label>Credits Allotted</label><input type="number" id="eventCredits" value="2.00" min="0.01" step="0.01" required></div>
+                <div class="form-group"><label>Maximum Participants</label><input type="number" id="eventCapacity" value="50" min="1" required></div>
+            </div>
+            <div class="form-group"><label>Registration Deadline</label><input type="date" id="registrationDeadline" required></div>
+            <div class="form-group"><label>Event Description</label><textarea id="eventDescription" rows="3"></textarea></div>
+            <button type="submit" class="btn btn-primary full-btn">Create Event</button>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="registrationModal">
+    <div class="modal-content">
+        <div class="modal-header"><h2>Register for Event</h2><button class="close" onclick="closeRegistrationModal()">×</button></div>
+        <form onsubmit="submitRegistration(event)">
+            <input type="hidden" id="registrationEventId">
+            <div class="form-group"><label>Student Name</label><input type="text" id="regStudentName" required></div>
+            <div class="form-group"><label>Register Number</label><input type="text" id="regStudentRegisterNo" required></div>
+            <div class="form-group"><label>Course</label><input type="text" id="regStudentCourse" required></div>
+            <div class="form-group"><label>Email ID</label><input type="email" id="regStudentEmail" required></div>
+            <div class="form-group"><label>Contact Number</label><input type="tel" id="regStudentContact" pattern="[0-9]{10}" maxlength="10" required></div>
+            <div class="form-group"><label>Year of Study</label><select id="regStudentYear" required><option value="">Select year</option><option>1st Year</option><option>2nd Year</option><option>3rd Year</option><option>4th Year</option></select></div>
+            <button class="btn btn-primary full-btn">Submit Registration</button>
+        </form>
+    </div>
+</div>
+
+<div class="modal" id="detailsModal">
+    <div class="modal-content" style="max-width:1000px"><div class="modal-header"><h2 id="detailsModalTitle">Event Registrations</h2><button class="close" onclick="closeDetailsModal()">×</button></div><div id="detailsModalBody"></div></div>
+</div>
+
+<div class="modal" id="certificateModal">
+    <div class="modal-content" style="max-width:1000px;max-height:90vh;overflow:auto">
+        <div class="modal-header"><h2 id="certificateModalTitle">Certificate</h2><button class="close" onclick="closeCertificateModal()">×</button></div>
+        <div id="certificateModalBody"></div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+
+<script>
+
+/* =====================================================
+   DATA
+===================================================== */
+
+let users = [];
+
+
+let events = [];
+
+
+
+let registrations = [];
+
+let attendance = [];
+
+let creditTransactions = [];
+let interCollegeSubmissions = [];
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+let selectedRole = "admin";
+
+let currentStudent = null;
+let currentTeacher = null;
+let currentAdmin = null;
+let studentHistoryCharts = [];
+let saveTimer = null;
+let saveInFlight = false;
+let localMutationAt = 0;
+let pendingStudentUpdates = new Map();
+let pendingDeletes = {
+    events: new Set(),
+    registrations: new Set(),
+    creditTransactions: new Set(),
+    interCollegeSubmissions: new Set()
+};
+
+
+/* =====================================================
+   AUTHENTICATION DATA
+   Source: Admin, Teacher and Student credential CSVs
+===================================================== */
+
+let adminCredentials = [
+    {
+        "id": "1",
+        "name": "MS.RUBY PETER",
+        "email": "rubypeteradmin@jnc.org",
+        "password": "jnc123"
+    },
+    {
+        "id": "2",
+        "name": "MS.HARI PRIYA S",
+        "email": "haripriyasadmin@jnc.org",
+        "password": "jnc123"
+    },
+    {
+        "id": "3",
+        "name": "MS.REVATHI S",
+        "email": "revathisadmin@jnc.org",
+        "password": "jnc123"
+    }
+];
+
+let teacherCredentials = [
+    {
+        "id": "CS01",
+        "name": "Ms. Anitha Murthy R",
+        "email": "anithamurthyr@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS02",
+        "name": " Ms. Neeta Georphin",
+        "email": "neetageorphin@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS03",
+        "name": "Ms. Sheril Sophia D'couto",
+        "email": "sherilsophiadcouto@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS04",
+        "name": "Dr. Srinivas Narasegouda",
+        "email": "srinivasnarasegouda@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS05",
+        "name": "Ms. Celestine Jeena J",
+        "email": "celestialjeenaj@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS06",
+        "name": "Mr. Deepak K R",
+        "email": "deepakk@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS07",
+        "name": "Ms. Vandana. R",
+        "email": "vandanar@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS08",
+        "name": "Ms. Steffi. P",
+        "email": "steffip@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS09",
+        "name": "Ms. M. Hemalatha",
+        "email": "mhemalatha@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS10",
+        "name": "Dr. J.Jeyaboopathiraja",
+        "email": "jjeyaboopathiraja@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS11",
+        "name": "Ms.Haritha V",
+        "email": "harithav@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS12",
+        "name": "Ms. Pavithra S",
+        "email": "pavithras@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS13",
+        "name": "Ms.Ruby Peter",
+        "email": "rubypeter@jnc.org",
+        "password": "jnc124",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS14",
+        "name": "Ms.Hari Priya S",
+        "email": "haripriyas@jnc.org",
+        "password": "jnc125",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CS15",
+        "name": "Ms.Revathi S",
+        "email": "revathis@jnc.org",
+        "password": "jnc126",
+        "department": "COMPUTER SCIENCE"
+    },
+    {
+        "id": "CMS01",
+        "name": "Ms. Grace Samuel",
+        "email": "gracesamuel@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS02",
+        "name": "Dr. Josephine Narmadha J",
+        "email": "josephinenarmadhaj@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS03",
+        "name": "Ms. Anupama V Bhat",
+        "email": "anupamavbhat@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS04",
+        "name": "Dr. Harathi D",
+        "email": "harathid@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS05",
+        "name": "Ms. Paramitha Sen",
+        "email": "paramithasen@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS06",
+        "name": "Dr. Vidya H S",
+        "email": "vidyahs@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS07",
+        "name": "Ms. Radhika Kamath",
+        "email": "radhikakamath@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS08",
+        "name": "Ms. Roshni Shetty",
+        "email": "roshnishetty@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS09",
+        "name": "Ms. Anupama K",
+        "email": "anupamak@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS10",
+        "name": "Ms. Ashmitha Manisha D'souza",
+        "email": "ashmithamanishadsouza@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS11",
+        "name": "Dr. N. Arunkumar",
+        "email": "narunkumar@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS12",
+        "name": "Dr. Farah Mathew",
+        "email": "farahmathew@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS13",
+        "name": "Mr. Chirag S",
+        "email": "chirags@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS14",
+        "name": "Ms. Shanolia M Paldano",
+        "email": "shanoliampaldano@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS15",
+        "name": "Dr. Susmita Sarkar",
+        "email": "susmitasarkar@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS16",
+        "name": "Mr. Nithin G. Tom",
+        "email": "nithingtom@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS17",
+        "name": "Dr. Gracy Mathan",
+        "email": "gracymathan@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS18",
+        "name": "Ms. Anusha A",
+        "email": "anushaa@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS19",
+        "name": "Dr. Narayani Bhatt",
+        "email": "narayanibhatt@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS20",
+        "name": "Ms. Merin Joseph",
+        "email": "merinjoseph@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS21",
+        "name": "Ms. Mary Joseph",
+        "email": "maryjoseph@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS22",
+        "name": "Ms. Maria Josephine Swathi. U",
+        "email": "mariajosephineswathiu@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "CMS23",
+        "name": "Ms. Zeena Premila Lobo",
+        "email": "zeenapremilaloba@jnc.org",
+        "password": "jnc123",
+        "department": "COMMERCE MANAGEMENT"
+    },
+    {
+        "id": "ED01",
+        "name": "Ms. Naureen Aziz",
+        "email": "naureenaziz@jnc.org",
+        "password": "jnc123",
+        "department": "ENGLISH DEPARTMENT"
+    },
+    {
+        "id": "ED02",
+        "name": "Ms. Veronica A",
+        "email": "veronicaa@jnc.org",
+        "password": "jnc123",
+        "department": "ENGLISH DEPARTMENT"
+    },
+    {
+        "id": "ED03",
+        "name": "Ms. Suparna Sen Gupta",
+        "email": "suparnasengupta@jnc.org",
+        "password": "jnc123",
+        "department": "ENGLISH DEPARTMENT"
+    },
+    {
+        "id": "ED04",
+        "name": "Ms. Nitu Thakur",
+        "email": "nituthakur@jnc.org",
+        "password": "jnc123",
+        "department": "ENGLISH DEPARTMENT"
+    },
+    {
+        "id": "ED05",
+        "name": "Dr. Shweta Singh",
+        "email": "shwetasingh@jnc.org",
+        "password": "jnc123",
+        "department": "ENGLISH DEPARTMENT"
+    },
+    {
+        "id": "ED06",
+        "name": "Dr. Namrata Mohan",
+        "email": "namratamohan@jnc.org",
+        "password": "jnc123",
+        "department": "ENGLISH DEPARTMENT"
+    },
+    {
+        "id": "ED07",
+        "name": "Ms. Felcina Dcruz",
+        "email": "felcinadcruz@jnc.org",
+        "password": "jnc123",
+        "department": "ENGLISH DEPARTMENT"
+    },
+    {
+        "id": "ED08",
+        "name": "Dr. Vinita Marigold. K",
+        "email": "vinitamarigoldk@jnc.org",
+        "password": "jnc123",
+        "department": "ENGLISH DEPARTMENT"
+    },
+    {
+        "id": "KD01",
+        "name": "Dr. Goolappa Okkunda",
+        "email": "goolappaokkunda@jnc.org",
+        "password": "jnc123",
+        "department": "KANNADA DEPARTMENT"
+    },
+    {
+        "id": "KD02",
+        "name": "Dr. Leelavathi HS",
+        "email": "leelavathihs@jnc.org",
+        "password": "jnc123",
+        "department": "KANNADA DEPARTMENT"
+    },
+    {
+        "id": "KD03",
+        "name": "Dr. Manjunatha G",
+        "email": "manjunathag@jnc.org",
+        "password": "jnc123",
+        "department": "KANNADA DEPARTMENT"
+    },
+    {
+        "id": "HD01",
+        "name": "Dr. Capt. H.K. Roopa Rani",
+        "email": "hkrooparani@jnc.org",
+        "password": "jnc123",
+        "department": "HINDI DEPARTMENT"
+    },
+    {
+        "id": "HD02",
+        "name": "Dr. Subhadra Kumari",
+        "email": "subhadrakumari@jnc.org",
+        "password": "jnc123",
+        "department": "HINDI DEPARTMENT"
+    },
+    {
+        "id": "HD03",
+        "name": "Ms. Ashwini M.S",
+        "email": "ashwinims@jnc.org",
+        "password": "jnc123",
+        "department": "HINDI DEPARTMENT"
+    },
+    {
+        "id": "FD01",
+        "name": "Ms. Swarnalatha Paramasivan",
+        "email": "swarnalathaparamasivan@jnc.org",
+        "password": "jnc123",
+        "department": "FRENCH DEPARTMENT"
+    },
+    {
+        "id": "MS01",
+        "name": "Mr. Sumit Dasgupta",
+        "email": "sumitdasgupta@jnc.org",
+        "password": "jnc123",
+        "department": "CENTRE OF MEDIA STUDIES"
+    },
+    {
+        "id": "MS02",
+        "name": "Mr. Kapil Arambam",
+        "email": "kapilarambam@jnc.org",
+        "password": "jnc123",
+        "department": "CENTRE OF MEDIA STUDIES"
+    },
+    {
+        "id": "MS03",
+        "name": "Ms. Renita Mendeonsa",
+        "email": "renitamendeonsa@jnc.org",
+        "password": "jnc123",
+        "department": "CENTRE OF MEDIA STUDIES"
+    },
+    {
+        "id": "MS04",
+        "name": "Mr. Nikhil Banerjee A",
+        "email": "nikhilbanerjee@jnc.org",
+        "password": "jnc123",
+        "department": "CENTRE OF MEDIA STUDIES"
+    },
+    {
+        "id": "MS05",
+        "name": "Ms. Amrutha A",
+        "email": "amruthaa@jnc.org",
+        "password": "jnc123",
+        "department": "CENTRE OF MEDIA STUDIES"
+    },
+    {
+        "id": "E01",
+        "name": "Dr. Leena Nair",
+        "email": "leenanair@jnc.org",
+        "password": "jnc123",
+        "department": "ECONOMICS DEPARTMENT"
+    },
+    {
+        "id": "E02",
+        "name": "Dr. Radha Ganapathy",
+        "email": "radhaganapathy@jnc.org",
+        "password": "jnc123",
+        "department": "ECONOMICS DEPARTMENT"
+    },
+    {
+        "id": "E03",
+        "name": "Dr. Anuja. B",
+        "email": "anujab@jnc.org",
+        "password": "jnc123",
+        "department": "ECONOMICS DEPARTMENT"
+    },
+    {
+        "id": "H01",
+        "name": "Dr.K.B.Sakithyan",
+        "email": "kbsakithyan@jnc.org",
+        "password": "jnc123",
+        "department": "HISTORY DEPARTMENT"
+    },
+    {
+        "id": "SD01",
+        "name": "Dr. Sr. Mary Louisa S. ",
+        "email": "marylouisas@jnc.org",
+        "password": "jnc123",
+        "department": "SOCIOLOGY DEPARTMENT"
+    },
+    {
+        "id": "SD02",
+        "name": "Ms. Janhavi N. ",
+        "email": "janhavin@jnc.org",
+        "password": "jnc123",
+        "department": "SOCIOLOGY DEPARTMENT"
+    },
+    {
+        "id": "SD03",
+        "name": "Dr. Vasudha M.C",
+        "email": "vasudhamc@jnc.org",
+        "password": "jnc123",
+        "department": "SOCIOLOGY DEPARTMENT"
+    },
+    {
+        "id": "TT01",
+        "name": "Dr. Anila Thomas",
+        "email": "anilathomas@jnc.org",
+        "password": "jnc123",
+        "department": "MANAGEMENT OF TOURISM & TRAVEL"
+    },
+    {
+        "id": "TT02",
+        "name": "Mr. Prakasha N",
+        "email": "prakashan@jnc.org",
+        "password": "jnc123",
+        "department": "MANAGEMENT OF TOURISM & TRAVEL"
+    },
+    {
+        "id": "TT03",
+        "name": "Ms. Ronita R",
+        "email": "ronitar@jnc.org",
+        "password": "jnc123",
+        "department": "MANAGEMENT OF TOURISM & TRAVEL"
+    },
+    {
+        "id": "PD01",
+        "name": "Dr. Roseline Florence Gomes",
+        "email": "roselineflorencegomes@jnc.org",
+        "password": "jnc123",
+        "department": "PSYCHOLOGY DEPARTMENT"
+    },
+    {
+        "id": "PD02",
+        "name": "Ms. Vanhmingliani Hnamte",
+        "email": "vanhminglianihnamte@jnc.org",
+        "password": "jnc123",
+        "department": "PSYCHOLOGY DEPARTMENT"
+    },
+    {
+        "id": "PD03",
+        "name": "Ms. Acsa Saby",
+        "email": "acsasaby@jnc.org",
+        "password": "jnc123",
+        "department": "PSYCHOLOGY DEPARTMENT"
+    },
+    {
+        "id": "PD04",
+        "name": "Ms. Junice Lizy James",
+        "email": "junicelizyjames@jnc.org",
+        "password": "jnc123",
+        "department": "PSYCHOLOGY DEPARTMENT"
+    },
+    {
+        "id": "PD05",
+        "name": "Ms. Felicia Saldanha",
+        "email": "feliciasaldanha@jnc.org",
+        "password": "jnc123",
+        "department": "PSYCHOLOGY DEPARTMENT"
+    },
+    {
+        "id": "PD06",
+        "name": "Ms. Pearl Jyolin Gabriel",
+        "email": "pearljyolingabriel@jnc.org",
+        "password": "jnc123",
+        "department": "PSYCHOLOGY DEPARTMENT"
+    },
+    {
+        "id": "PD07",
+        "name": "Ms. Archita Thakuria",
+        "email": "architathakuria@jnc.org",
+        "password": "jnc123",
+        "department": "PSYCHOLOGY DEPARTMENT"
+    },
+    {
+        "id": "PD08",
+        "name": "Ms. Anusmita Kalita",
+        "email": "anusmitakalita@jnc.org",
+        "password": "jnc123",
+        "department": "PSYCHOLOGY DEPARTMENT"
+    },
+    {
+        "id": "PD09",
+        "name": "Ms. Nancy Preetha J",
+        "email": "nancypreethaj@jnc.org",
+        "password": "jnc123",
+        "department": "PSYCHOLOGY DEPARTMENT"
+    },
+    {
+        "id": "PD010",
+        "name": "Ms. Devika M",
+        "email": "devikam@jnc.org",
+        "password": "jnc123",
+        "department": "PSYCHOLOGY DEPARTMENT"
+    },
+    {
+        "id": "PD011",
+        "name": "Ms. Srishti Majumder",
+        "email": "srishtimajumder@jnc.org",
+        "password": "jnc123",
+        "department": "PSYCHOLOGY DEPARTMENT"
+    },
+    {
+        "id": "PD012",
+        "name": "Ms. Nikitha S",
+        "email": "nikithas@jnc.org",
+        "password": "jnc123",
+        "department": "PSYCHOLOGY DEPARTMENT"
+    },
+    {
+        "id": "BT01",
+        "name": "Mr. Shanmugam V. M",
+        "email": "shanmugamvm@jnc.org",
+        "password": "jnc123",
+        "department": "BIOTECHNOLOGY DEPARTMENT"
+    },
+    {
+        "id": "BT02",
+        "name": "Dr. Divya Joseph Pereira",
+        "email": "divyajosephpereira@jnc.org",
+        "password": "jnc123",
+        "department": "BIOTECHNOLOGY DEPARTMENT"
+    },
+    {
+        "id": "BT03",
+        "name": "Dr. Rini Abraham",
+        "email": "riniabraham@jnc.org",
+        "password": "jnc123",
+        "department": "BIOTECHNOLOGY DEPARTMENT"
+    },
+    {
+        "id": "BT04",
+        "name": "Dr. Vinay B Raghavendra",
+        "email": "vinaybraghavendra@jnc.org",
+        "password": "jnc123",
+        "department": "BIOTECHNOLOGY DEPARTMENT"
+    },
+    {
+        "id": "ZD01",
+        "name": "Dr. Vinutha R Bhatta",
+        "email": "vinutharbhatta@jnc.org",
+        "password": "jnc123",
+        "department": "ZOOLOGY DEPARTMENT"
+    },
+    {
+        "id": "ZD02",
+        "name": "Dr. Soumya K",
+        "email": "soumyak@jnc.org",
+        "password": "jnc123",
+        "department": "ZOOLOGY DEPARTMENT"
+    },
+    {
+        "id": "ZD03",
+        "name": "Dr. S Devi Thangam",
+        "email": "sdevithangam@jnc.org",
+        "password": "jnc123",
+        "department": "ZOOLOGY DEPARTMENT"
+    },
+    {
+        "id": "GD01",
+        "name": "Dr. Vinutha R Bhatta",
+        "email": "vinutharbhatta@jnc.org",
+        "password": "jnc123",
+        "department": "GENETICS DEPARTMENT"
+    },
+    {
+        "id": "GD02",
+        "name": "Dr. Reema Orison Lobo",
+        "email": "reemaorisonlobo@jnc.org",
+        "password": "jnc123",
+        "department": "GENETICS DEPARTMENT"
+    },
+    {
+        "id": "GD03",
+        "name": "Ms. Janani Vijaykumar",
+        "email": "jananivijaykumar@jnc.org",
+        "password": "jnc123",
+        "department": "GENETICS DEPARTMENT"
+    },
+    {
+        "id": "BD01",
+        "name": "Dr. Priyadarshini Pillai",
+        "email": "priyadarshinipillai@jnc.org",
+        "password": "jnc123",
+        "department": "BOTANY DEPARTMENT"
+    },
+    {
+        "id": "BD02",
+        "name": "Dr. Mohana. B",
+        "email": "mohanab@jnc.org",
+        "password": "jnc123",
+        "department": "BOTANY DEPARTMENT"
+    },
+    {
+        "id": "BC01",
+        "name": "Dr. Sophia. D",
+        "email": "sophiad@jnc.org",
+        "password": "jnc123",
+        "department": "BIOCHEMISTRY DEPARTMENT"
+    },
+    {
+        "id": "BC02",
+        "name": "Dr. Mary Arpana",
+        "email": "maryarpana@jnc.org",
+        "password": "jnc123",
+        "department": "BIOCHEMISTRY DEPARTMENT"
+    },
+    {
+        "id": "PYD01",
+        "name": "Mr. Jeevan K.N",
+        "email": "jeevankn@jnc.org",
+        "password": "jnc123",
+        "department": "PHYSICS DEPARTMENT"
+    },
+    {
+        "id": "PYD02",
+        "name": "Ms. Shakila",
+        "email": "shakila@jnc.org",
+        "password": "jnc123",
+        "department": "PHYSICS DEPARTMENT"
+    },
+    {
+        "id": "ET01",
+        "name": "Mr. Hemanth D N",
+        "email": "hemanthdn@jnc.org",
+        "password": "jnc123",
+        "department": "ELECTRONICS DEPARTMENT"
+    },
+    {
+        "id": "ET02",
+        "name": "Ms. Mary Cordella D'Cruz",
+        "email": "marycordelladcruz@jnc.org",
+        "password": "jnc123",
+        "department": "ELECTRONICS DEPARTMENT"
+    },
+    {
+        "id": "ET03",
+        "name": "Dr. Pratima Bhat",
+        "email": "pratimabhat@jnc.org",
+        "password": "jnc123",
+        "department": "ELECTRONICS DEPARTMENT"
+    },
+    {
+        "id": "CD01",
+        "name": "Dr. Preeti Mangala",
+        "email": "preetimangala@jnc.org",
+        "password": "jnc123",
+        "department": "CHEMISTRY DEPARTMENT"
+    },
+    {
+        "id": "CD02",
+        "name": "Mr. Mikhail Rajaram. K",
+        "email": "mikhailrajaramk@jnc.org",
+        "password": "jnc123",
+        "department": "CHEMISTRY DEPARTMENT"
+    },
+    {
+        "id": "CD03",
+        "name": "Dr. Mary Arpana",
+        "email": "maryarpana@jnc.org",
+        "password": "jnc123",
+        "department": "CHEMISTRY DEPARTMENT"
+    },
+    {
+        "id": "CD04",
+        "name": "Dr. Karthika A. ",
+        "email": "karthikaa@jnc.org",
+        "password": "jnc123",
+        "department": "CHEMISTRY DEPARTMENT"
+    },
+    {
+        "id": "CD05",
+        "name": "Dr. Raghu",
+        "email": "raghu@jnc.org",
+        "password": "jnc123",
+        "department": "CHEMISTRY DEPARTMENT"
+    },
+    {
+        "id": "CD06",
+        "name": "Dr. Sudha S",
+        "email": "sudhas@jnc.org",
+        "password": "jnc123",
+        "department": "CHEMISTRY DEPARTMENT"
+    },
+    {
+        "id": "MD01",
+        "name": "Ms. Sheryne Jemima John",
+        "email": "sherynejemimajohn@jnc.org",
+        "password": "jnc123",
+        "department": "MATHEMATICS DEPARTMENT"
+    },
+    {
+        "id": "MD02",
+        "name": "Dr. J.K. Navis Vigilia",
+        "email": "jknavisvigilia@jnc.org",
+        "password": "jnc123",
+        "department": "MATHEMATICS DEPARTMENT"
+    },
+    {
+        "id": "MD03",
+        "name": "Dr. V. Margret Ponrani",
+        "email": "vmargretponrani@jnc.org",
+        "password": "jnc123",
+        "department": "MATHEMATICS DEPARTMENT"
+    },
+    {
+        "id": "MD04",
+        "name": "Dr. Sr. T Arul Selvamary",
+        "email": "tarulselvamary@jnc.org",
+        "password": "jnc123",
+        "department": "MATHEMATICS DEPARTMENT"
+    },
+    {
+        "id": "MD05",
+        "name": "Dr. Sheeba S",
+        "email": "sheebas@jnc.org",
+        "password": "jnc123",
+        "department": "MATHEMATICS DEPARTMENT"
+    },
+    {
+        "id": "STD01",
+        "name": "Dr. Latha V",
+        "email": "lathav@jnc.org",
+        "password": "jnc123",
+        "department": "STATISTICS DEPARTMENT"
+    }
+];
+
+let studentCredentials = [
+    {
+        "id": "S1",
+        "name": "I.AFREEN",
+        "email": "iafreen.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S2",
+        "name": "AFRIN KHATOON",
+        "email": "afrinkhatoon.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S3",
+        "name": "AFSANA S",
+        "email": "afsanas.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S4",
+        "name": "AFYA HUSSAINI",
+        "email": "afyahussaini.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S5",
+        "name": "AISHWARYA  ",
+        "email": "aishwarya.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S6",
+        "name": "ALIZA LEPCHA",
+        "email": "alizalepcha.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S7",
+        "name": "AMEENA FATIMA",
+        "email": "ameenafatima.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S8",
+        "name": "ANITHA D",
+        "email": "anithad.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S9",
+        "name": "ANNIE JOSEPHINE H",
+        "email": "anniejosephineh.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S10",
+        "name": "APOORVA DHANANJAYA",
+        "email": "apoorvadhananjaya.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S11",
+        "name": "ASFIYA TARANNUM",
+        "email": "asfiyatarannum.24bcads@jync.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S12",
+        "name": "ASIYA KHATOON",
+        "email": "asiyakhatoon.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S13",
+        "name": "ATEEBA FIRDOUSE",
+        "email": "ateebafirdouse.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S14",
+        "name": "BARSHA RANI BEHERA",
+        "email": "barsharanibehera.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S15",
+        "name": "BHAVITHA. R",
+        "email": "bhavithar.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S16",
+        "name": "BHAVYA M",
+        "email": "bhavyam.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S17",
+        "name": "CARMEL ELIZABETH SAVU",
+        "email": "carmelelizabethsavu.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S18",
+        "name": "DIVYANSHI G",
+        "email": "divyanshig.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S19",
+        "name": "DUDAKULA AFRIN",
+        "email": "dudakulaafrin.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S20",
+        "name": "GANASHREE  B",
+        "email": "ganashree.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S21",
+        "name": "HAFSA NAZEERUDDIN",
+        "email": "hafsanazeeruddin.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S22",
+        "name": "HARSHITHA CHOUDHARY N  ",
+        "email": "harshithachoudharyn.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S23",
+        "name": "INDUSHREE V",
+        "email": "indushreev.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S24",
+        "name": "JAVERIYA N KHAN  ",
+        "email": "javeriyankhan.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S25",
+        "name": "KANISHA S",
+        "email": "kanishas.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S26",
+        "name": "KAVANA J",
+        "email": "kavanaj.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Revathi S"
+    },
+    {
+        "id": "S27",
+        "name": "KAVYA P",
+        "email": "kavyap.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S28",
+        "name": "KEERTHANA S",
+        "email": "keerthanas.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S29",
+        "name": "KEERTHI D",
+        "email": "keerthid.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S30",
+        "name": "KEERTHI REDDY V  ",
+        "email": "keerthireddyv.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S31",
+        "name": "MADHUMITHA B",
+        "email": "madhumithab.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S32",
+        "name": "MANASA K  ",
+        "email": "manasak.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S33",
+        "name": "MARIA MICHELLE S",
+        "email": "mariamichelles.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S34",
+        "name": "MEDHAVI",
+        "email": "medhavi.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S35",
+        "name": "MERLIN THERESA VIJAYAN",
+        "email": "merlintheresavijayan.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S36",
+        "name": "MUNIPRIYA T",
+        "email": "munipriyat.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S37",
+        "name": "MUSFIRAH UMAIMA",
+        "email": "musfirahumaima.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S38",
+        "name": "NITHYA SHREE.V.B",
+        "email": "nithyashreevb.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S39",
+        "name": "PRAGATI B Y",
+        "email": "pragatiby.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S40",
+        "name": "PREETI KUMARI MISHRA",
+        "email": "preetikumarimishra.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S41",
+        "name": "PRIYANKA. S",
+        "email": "priyankas.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S42",
+        "name": "RAISA HANAN",
+        "email": "raisahanan.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S43",
+        "name": "RASHMI GOWDA R",
+        "email": "rashmigowdar.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S44",
+        "name": "REBECCA STEPHEN",
+        "email": "rebeccastephen.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S45",
+        "name": "SAFA FATHIMA CHITTANAI",
+        "email": "safafathimachittanai.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S46",
+        "name": "SANJANA M",
+        "email": "sanjanam.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S47",
+        "name": "SANJU D",
+        "email": "sanjud.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S48",
+        "name": "SHALINI A",
+        "email": "shalinia.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S49",
+        "name": "SHALINI E",
+        "email": "shalinie.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S50",
+        "name": "SHALINI KUMARI",
+        "email": "shalinikumari.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S51",
+        "name": "SHARON SAM",
+        "email": "sharonsam.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S52",
+        "name": "SRISHA B",
+        "email": "srishab.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S53",
+        "name": "TANVI SANJEEV GURAPPAGOL",
+        "email": "tanvisanjeevgurappagol.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Ruby Peter"
+    },
+    {
+        "id": "S54",
+        "name": "TEJASWINI V",
+        "email": "tejaswiniv.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Hari Priya S"
+    },
+    {
+        "id": "S55",
+        "name": "VAISHNAVI C",
+        "email": "vaishnavic.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Hari Priya S"
+    },
+    {
+        "id": "S56",
+        "name": "VAISHNAVI K",
+        "email": "vaishnavik.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Hari Priya S"
+    },
+    {
+        "id": "S57",
+        "name": "VAISHNAVI M",
+        "email": "vaishnavim.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Hari Priya S"
+    },
+    {
+        "id": "S58",
+        "name": "YASHASWINI G",
+        "email": "yashaswinig.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Hari Priya S"
+    },
+    {
+        "id": "S59",
+        "name": "ZOHRA SULTANA",
+        "email": "zohrasultana.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Hari Priya S"
+    },
+    {
+        "id": "S60",
+        "name": "AMULYA UPPALAPATI",
+        "email": "amulyauppalapati.24bcads@jnc.org",
+        "password": "jnc123",
+        "department": "COMPUTER SCIENCE",
+        "mentor": "Ms.Hari Priya S"
+    }
+];
+
+/* =====================================================
+   PERSISTENT EVENT / REGISTRATION DATA
+   Keeps created events available after logout/login and
+   after refreshing the page in the same browser.
+===================================================== */
+const APP_DATA_KEY = "collegeCreditBankEventData";
+
+function buildStudentsFromCredentials() {
+    return studentCredentials.map(account => ({
+        id: "STU" + String(account.id).padStart(3, "0"),
+        name: account.name,
+        email: account.email,
+        password: account.password,
+        course: "BCA",
+        semester: 1,
+        credits: 0,
+        avatar: account.name.split(/\s+/).filter(Boolean).map(n => n[0]).slice(0, 2).join("")
+    }));
+}
+
+function saveAppData() {
+    localMutationAt = Date.now();
+    if (saveTimer) clearTimeout(saveTimer);
+
+    saveTimer = setTimeout(async () => {
+        saveTimer = null;
+        if (saveInFlight) {
+            // The in-flight request will schedule the next save after it
+            // completes. Do not send overlapping full-state writes.
+            saveAppData();
+            return;
+        }
+
+        saveInFlight = true;
+        const payload = {
+            events,
+            registrations,
+            attendance,
+            creditTransactions,
+            users,
+            studentUpdates: [...pendingStudentUpdates.values()],
+            interCollegeSubmissions,
+            deletedEvents: [...pendingDeletes.events],
+            deletedRegistrations: [...pendingDeletes.registrations],
+            deletedCreditTransactions: [...pendingDeletes.creditTransactions],
+            deletedInterCollegeSubmissions: [...pendingDeletes.interCollegeSubmissions]
+        };
+
+        // These deletions belong to this exact snapshot.
+        pendingDeletes = {
+            events: new Set(),
+            registrations: new Set(),
+            creditTransactions: new Set(),
+            interCollegeSubmissions: new Set()
+        };
+        pendingStudentUpdates = new Map();
+
+        try {
+            const response = await fetch("/api/state", {
+                method: "PUT",
+                headers: {"Content-Type":"application/json"},
+                body: JSON.stringify(payload)
+            });
+            if (!response.ok) throw new Error("Server save failed");
+            const result = await response.json();
+
+            // Only refresh local arrays from the server after our write has
+            // completed. This prevents the 5-second poller from erasing
+            // in-progress changes while a save is underway.
+            if (result.state) {
+                events = result.state.events || events;
+                registrations = result.state.registrations || registrations;
+                attendance = result.state.attendance || attendance;
+                creditTransactions = result.state.creditTransactions || creditTransactions;
+                interCollegeSubmissions = result.state.interCollegeSubmissions || interCollegeSubmissions;
+                users = result.state.students || users;
+            }
+        } catch (error) {
+            console.error("Could not save application data:", error);
+            alert("The data could not be saved to the SQL server. Make sure the backend server is running.");
+            // Keep the data marked dirty so the next save can retry.
+            pendingDeletes.events = new Set([...pendingDeletes.events, ...payload.deletedEvents]);
+            pendingDeletes.registrations = new Set([...pendingDeletes.registrations, ...payload.deletedRegistrations]);
+            pendingDeletes.creditTransactions = new Set([...pendingDeletes.creditTransactions, ...payload.deletedCreditTransactions]);
+            pendingDeletes.interCollegeSubmissions = new Set([...pendingDeletes.interCollegeSubmissions, ...payload.deletedInterCollegeSubmissions]);
+            for (const u of (payload.studentUpdates || [])) pendingStudentUpdates.set(String(u.id), u);
+        } finally {
+            saveInFlight = false;
+            // If anything changed while the request was running, persist the
+            // newest state as a second, ordered request.
+            if (Date.now() - localMutationAt < 1000 || pendingDeletes.events.size || pendingDeletes.registrations.size || pendingDeletes.creditTransactions.size || pendingDeletes.interCollegeSubmissions.size) {
+                saveAppData();
+            }
+        }
+    }, 150);
+
+    return true;
+}
+
+
+async function loadAppData() {
+    try {
+        const response = await fetch("/api/bootstrap");
+        if (!response.ok) throw new Error("Could not load SQL data");
+        const data = await response.json();
+
+        adminCredentials = data.admins || adminCredentials;
+        teacherCredentials = data.teachers || teacherCredentials;
+        studentCredentials = data.students || studentCredentials;
+
+        users = (data.students || []).map(s => ({
+            ...s,
+            avatar: s.avatar || String(s.name || "").split(/\s+/).filter(Boolean).map(n=>n[0]).slice(0,2).join("")
+        }));
+        events = data.events || [];
+        registrations = data.registrations || [];
+        attendance = data.attendance || [];
+        creditTransactions = data.creditTransactions || [];
+        interCollegeSubmissions = data.interCollegeSubmissions || [];
+    } catch (error) {
+        console.error("SQL server could not be reached:", error);
+        alert("The backend server is not running. Start it with: npm start");
+    }
+}
+function normalizeEmail(value) {
+    return value.trim().toLowerCase();
+}
+
+function selectRole(role) {
+    selectedRole = role;
+
+    document.querySelectorAll(".role-tabs button")
+        .forEach(btn => btn.classList.remove("active"));
+
+    document.getElementById(role + "Role")
+        .classList.add("active");
+
+    const heading = document.getElementById("loginHeading");
+    const email = document.getElementById("loginEmail");
+    if(role === "admin") {
+        heading.textContent = "Admin Login";
+        email.placeholder = "Enter admin email";
+    }
+
+    if(role === "teacher") {
+        heading.textContent = "Teacher Login";
+        email.placeholder = "Enter teacher email";
+    }
+
+    if(role === "student") {
+        heading.textContent = "Student Login";
+        email.placeholder = "Enter student email";
+    }
+
+    document.getElementById("loginEmail").value = "";
+    document.getElementById("loginPassword").value = "";
+}
+
+function togglePasswordVisibility() {
+    const passwordInput = document.getElementById("loginPassword");
+    const toggleButton = document.getElementById("togglePassword");
+
+    if (passwordInput.type === "password") {
+        passwordInput.type = "text";
+        toggleButton.textContent = "🙈";
+        toggleButton.setAttribute("aria-label", "Hide password");
+        toggleButton.setAttribute("title", "Hide password");
+    } else {
+        passwordInput.type = "password";
+        toggleButton.textContent = "👁️";
+        toggleButton.setAttribute("aria-label", "Show password");
+        toggleButton.setAttribute("title", "Show password");
+    }
+}
+
+
+async function apiFetch(path, options = {}) {
+    // Prefer the current website origin. If the HTML was accidentally opened
+    // directly from disk (file://), use the local backend explicitly.
+    const isFilePage = window.location.protocol === "file:";
+    const base = isFilePage ? "http://localhost:3000" : window.location.origin;
+    const url = new URL(path, base).toString();
+    try {
+        return await fetch(url, {
+            ...options,
+            headers: {
+                "Accept": "application/json",
+                ...(options.headers || {})
+            },
+            cache: "no-store"
+        });
+    } catch (firstError) {
+        // If localhost resolves differently on the machine, retry once through
+        // 127.0.0.1 before reporting a connection failure.
+        if (!isFilePage && /localhost/.test(url)) {
+            const fallback = new URL(path, "http://127.0.0.1:3000").toString();
+            return await fetch(fallback, {
+                ...options,
+                headers: {
+                    "Accept": "application/json",
+                    ...(options.headers || {})
+                },
+                cache: "no-store"
+            });
+        }
+        throw firstError;
+    }
+}
+
+async function readApiResponse(response) {
+    const text = await response.text();
+    let data = {};
+    try { data = text ? JSON.parse(text) : {}; }
+    catch (_) { throw new Error(`Server returned a non-JSON response (HTTP ${response.status}).`); }
+    return data;
+}
+
+function renderPortalUserNames() {
+    // Keep the logged-in user's name visible in each portal header.
+    const setText = (id, value) => {
+        const el = document.getElementById(id);
+        if (el) el.textContent = value || "";
+    };
+    const initials = (name, fallback) => {
+        const clean = String(name || "").trim();
+        if (!clean) return fallback;
+        return clean.split(/\s+/).slice(0, 2).map(part => part.charAt(0).toUpperCase()).join("");
+    };
+
+    if (currentAdmin) {
+        setText("adminNameTop", currentAdmin.name || "Administrator");
+        setText("adminRoleTop", "Admin");
+        setText("adminAvatar", initials(currentAdmin.name, "AD"));
+    }
+
+    if (currentTeacher) {
+        setText("teacherNameTop", currentTeacher.name || "Teacher");
+        setText("teacherRoleTop", currentTeacher.department || "Faculty");
+        setText("teacherAvatar", initials(currentTeacher.name, "TC"));
+    }
+
+    if (currentStudent) {
+        setText("studentNameTop", currentStudent.name || "Student");
+        setText("studentIdTop", currentStudent.id || "Student ID");
+        setText("studentCourseSemesterTop", `${currentStudent.course || "BCA Data Science"} · ${currentStudent.semester || "5th Semester"}`);
+        setText("studentAvatar", initials(currentStudent.name, "ST"));
+        setText("studentWelcome", "Welcome, " + (currentStudent.name || "Student"));
+    }
+}
+
+async function login(e) {
+    e.preventDefault();
+
+    const email = normalizeEmail(document.getElementById("loginEmail").value);
+    const password = document.getElementById("loginPassword").value;
+
+    try {
+        const response = await apiFetch("/api/login", {
+            method: "POST",
+            headers: {"Content-Type":"application/json"},
+            body: JSON.stringify({ role: selectedRole, email, password })
+        });
+        const data = await readApiResponse(response);
+        if (!response.ok) {
+            alert(data.error || data.detail || `Login failed (HTTP ${response.status})`);
+            return;
+        }
+
+        const account = data.account;
+        if (!account) throw new Error("Backend login response did not contain an account.");
+
+        if(selectedRole === "admin") {
+            currentTeacher = null; currentStudent = null; currentAdmin = account;
+            renderPortalUserNames(); openApp("adminApp"); renderAll(); return;
+        }
+
+        if(selectedRole === "teacher") {
+            currentAdmin = null; currentStudent = null; currentTeacher = account;
+            renderPortalUserNames(); openApp("teacherApp"); renderAll(); return;
+        }
+
+        currentAdmin = null; currentTeacher = null;
+        currentStudent = users.find(u => normalizeEmail(u.email) === email) || {
+            ...account, id: account.id, credits: Number(account.credits || 0)
+        };
+        renderPortalUserNames(); openApp("studentApp"); renderAll();
+    } catch (error) {
+        console.error("Login request failed:", error);
+        alert("Backend connection error: " + (error && error.message ? error.message : error));
+    }
+}
+function openApp(id) {
+
+    document.getElementById("loginPage")
+        .style.display = "none";
+
+    document.querySelectorAll(".app")
+        .forEach(app => app.style.display = "none");
+
+    document.getElementById(id)
+        .style.display = "block";
+
+    renderPortalUserNames();
+
+    renderAll();
+
+}
+
+
+function logout() {
+    currentAdmin = null;
+    currentTeacher = null;
+    currentStudent = null;
+
+    // Logout is intentionally available only through an explicit click/tap
+    // on the Logout control. Pressing Enter anywhere in the teacher/admin
+    // portal must never log the user out accidentally.
+    document.querySelectorAll(".app")
+        .forEach(app => app.style.display = "none");
+
+    document.getElementById("loginPage")
+        .style.display = "flex";
+
+    document.getElementById("loginEmail").value = "";
+
+    document.getElementById("loginPassword").value = "";
+
+}
+
+
+/* =====================================================
+   PREVENT ACCIDENTAL LOGOUT WITH ENTER KEY
+===================================================== */
+
+document.addEventListener("keydown", function(event) {
+    if (event.key !== "Enter") return;
+
+    const target = event.target;
+    const logoutControl = target && target.closest
+        ? target.closest(".nav-item.logout")
+        : null;
+
+    // If keyboard focus happens to be on the Logout navigation item,
+    // Enter must NOT activate it. Logout should happen only by clicking/tapping.
+    if (logoutControl) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+});
+
+
+/* =====================================================
+   ADMIN NAVIGATION
+===================================================== */
+
+function adminSection(id, element) {
+
+    document.querySelectorAll("#adminApp .section")
+        .forEach(s => s.classList.remove("active"));
+
+    document.getElementById(id)
+        .classList.add("active");
+
+
+    document.querySelectorAll("#adminApp .nav-item")
+        .forEach(n => n.classList.remove("active"));
+
+    element.classList.add("active");
+
+
+    renderAll();
+
+}
+
+
+/* =====================================================
+   TEACHER NAVIGATION
+===================================================== */
+
+function teacherSection(id, element) {
+
+    document.querySelectorAll("#teacherApp .section")
+        .forEach(s => s.classList.remove("active"));
+
+    document.getElementById(id)
+        .classList.add("active");
+
+
+    document.querySelectorAll("#teacherApp .nav-item")
+        .forEach(n => n.classList.remove("active"));
+
+    element.classList.add("active");
+
+
+    renderAll();
+
+}
+
+
+/* =====================================================
+   STUDENT NAVIGATION
+===================================================== */
+
+function studentSection(id, element) {
+
+    document.querySelectorAll("#studentApp .section")
+        .forEach(s => s.classList.remove("active"));
+
+    document.getElementById(id)
+        .classList.add("active");
+
+
+    document.querySelectorAll("#studentApp .nav-item")
+        .forEach(n => n.classList.remove("active"));
+
+    element.classList.add("active");
+
+
+    renderStudent();
+
+}
+
+
+/* =====================================================
+   ADMIN RENDERING
+===================================================== */
+
+function renderAdminStudents() {
+
+    let html = "";
+
+    users.forEach(student => {
+
+        html += `
+        <tr onclick="showStudentHistory('${student.id}')" style="cursor:pointer" title="Click to view this student's dashboard">
+            <td>${student.id}</td>
+            <td><strong>${student.name}</strong></td>
+            <td>${student.email}</td>
+            <td>${student.course}</td>
+            <td>${student.semester}</td>
+            <td><span class="badge badge-blue">${Number(student.credits || 0).toFixed(2)}</span></td>
+            <td>
+                <button class="btn btn-primary" style="padding:7px 12px;font-size:12px"
+                    onclick="event.stopPropagation(); openStudentReport('${student.id}')">
+                    📄 Report
+                </button>
+            </td>
+        </tr>
+        `;
+
+    });
+
+
+    document.getElementById(
+        "studentManagementTable"
+    ).innerHTML = html;
+
+
+    const countEl = document.getElementById("adminStudentCount");
+    if (countEl) countEl.textContent = studentCredentials.length;
+
+    document.getElementById(
+        "adminStudentTable"
+    ).innerHTML = users.map(student => `
+
+        <tr onclick="showStudentHistory('${student.id}')" style="cursor:pointer" title="Click to view this student's dashboard">
+            <td>${student.id}</td>
+            <td><strong>${student.name}</strong></td>
+            <td>${student.course}</td>
+            <td>${student.semester}</td>
+            <td>${Number(student.credits || 0).toFixed(2)}</td>
+            <td>
+                <button class="btn btn-primary" style="padding:7px 12px;font-size:12px"
+                    onclick="event.stopPropagation(); openStudentReport('${student.id}')">
+                    📄 Report
+                </button>
+            </td>
+        </tr>
+
+    `).join("");
+
+    // Total Students must always reflect the complete student credential dataset.
+    const studentCount = document.getElementById("adminStudentCount");
+    if (studentCount) studentCount.textContent = studentCredentials.length;
+
+}
+
+
+/* =====================================================
+   ADMIN STUDENT HISTORY
+===================================================== */
+
+let currentReportStudentId = null;
+let currentReportData = null;
+
+function openStudentReport(studentId) {
+    if (!currentAdmin) {
+        alert("Please use the Admin profile to view a student report.");
+        return;
+    }
+
+    const student = users.find(u => String(u.id) === String(studentId));
+    if (!student) {
+        alert("Student details could not be found.");
+        return;
+    }
+
+    currentReportStudentId = student.id;
+    renderStudentReport(student.id);
+
+    document.querySelectorAll("#adminApp .section").forEach(s => s.classList.remove("active"));
+    const reportSection = document.getElementById("adminStudentReport");
+    if (reportSection) reportSection.classList.add("active");
+
+    document.querySelectorAll("#adminApp .nav-item").forEach(n => n.classList.remove("active"));
+    const studentsNav = document.querySelector('#adminApp .nav-item[onclick*="adminStudents"]');
+    if (studentsNav) studentsNav.classList.add("active");
+}
+
+function backToAdminStudents() {
+    const reportSection = document.getElementById("adminStudentReport");
+    const studentsSection = document.getElementById("adminStudents");
+    if (reportSection) reportSection.classList.remove("active");
+    if (studentsSection) studentsSection.classList.add("active");
+
+    document.querySelectorAll("#adminApp .nav-item").forEach(n => n.classList.remove("active"));
+    const studentsNav = document.querySelector('#adminApp .nav-item[onclick*="adminStudents"]');
+    if (studentsNav) studentsNav.classList.add("active");
+    renderAdminStudents();
+}
+
+function renderStudentReport(studentId) {
+    const student = users.find(u => String(u.id) === String(studentId));
+    const area = document.getElementById("studentReportArea");
+    if (!student || !area) return;
+
+    const esc = value => String(value ?? "").replace(/[&<>'"]/g, c =>
+        ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c])
+    );
+
+    // College events: only events for which the student was registered AND marked Present.
+    const collegeParticipations = registrations
+        .filter(r => String(r.studentId) === String(student.id))
+        .map(r => {
+            const event = events.find(e => String(e.id) === String(r.eventId));
+            const att = attendance.find(a =>
+                String(a.eventId) === String(r.eventId) &&
+                String(a.studentId) === String(student.id)
+            );
+            return { r, event, att };
+        })
+        .filter(x => x.event && x.att && x.att.status === "Present");
+
+    // Inter-college participation is counted after teacher approval.
+    const interCollegeParticipations = interCollegeSubmissions
+        .filter(x =>
+            String(x.studentId) === String(student.id) &&
+            String(x.status || "").toLowerCase() === "approved"
+        );
+
+    const collegeCredits = collegeParticipations.reduce(
+        (sum, x) => sum + Number(x.event.credits || 0), 0
+    );
+    const interCollegeCredits = interCollegeParticipations.reduce(
+        (sum, x) => sum + Number(x.awardedCredits || 0), 0
+    );
+
+    currentReportData = {
+        student,
+        collegeParticipations,
+        interCollegeParticipations,
+        collegeCredits,
+        interCollegeCredits
+    };
+
+    const collegeRows = collegeParticipations.length
+        ? collegeParticipations.map(x => `
+            <tr>
+                <td>${esc(formatDate(x.event.date))}</td>
+                <td><strong>${esc(x.event.name)}</strong></td>
+                <td>${esc(x.event.venue || "-")}</td>
+                <td>${Number(x.event.credits || 0).toFixed(2)}</td>
+                <td><span class="badge badge-green">Present</span></td>
+            </tr>
+        `).join("")
+        : `<tr><td colspan="5" style="text-align:center;color:#64748b;padding:25px">No college events attended yet.</td></tr>`;
+
+    const interRows = interCollegeParticipations.length
+        ? interCollegeParticipations.map(x => {
+            const result = x.winningCertificate ? "Won" : "Participated";
+            return `
+                <tr>
+                    <td>${esc(x.collegeName)}</td>
+                    <td>${esc(x.festName)}</td>
+                    <td><strong>${esc(x.eventName)}</strong></td>
+                    <td>${esc(result)}</td>
+                    <td>${Number(x.awardedCredits || 0).toFixed(2)}</td>
+                    <td><span class="badge badge-green">Approved</span></td>
+                </tr>
+            `;
+        }).join("")
+        : `<tr><td colspan="6" style="text-align:center;color:#64748b;padding:25px">No approved inter-college participation records yet.</td></tr>`;
+
+    area.innerHTML = `
+        <div id="studentReportPrintable">
+            <div style="background:linear-gradient(135deg,#5b1020,#7b1e32);color:#fff;border-radius:16px;padding:24px;margin-bottom:20px">
+                <div style="font-size:26px;font-weight:800">${esc(student.name)}</div>
+                <div style="opacity:.92;margin-top:7px">${esc(student.id)} · ${esc(student.email)}</div>
+                <div style="opacity:.92;margin-top:4px">${esc(student.course || "BCA Data Science")} · ${esc(student.semester || "5th Semester")}</div>
+            </div>
+
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:20px">
+                <div class="stat-card"><h2>${collegeParticipations.length}</h2><p>College Events</p></div>
+                <div class="stat-card"><h2>${interCollegeParticipations.length}</h2><p>Inter-College Events</p></div>
+                <div class="stat-card"><h2>${collegeCredits.toFixed(2)}</h2><p>College Credits</p></div>
+                <div class="stat-card"><h2>${interCollegeCredits.toFixed(2)}</h2><p>Inter-College Credits</p></div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>College Events Participated</h3>
+                        <p style="color:#64748b;margin-top:5px">Events where attendance was marked Present.</p>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>Date</th><th>Event</th><th>Venue</th><th>Credits</th><th>Attendance</th></tr></thead>
+                        <tbody>${collegeRows}</tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-header">
+                    <div>
+                        <h3>Inter-College Events Participated</h3>
+                        <p style="color:#64748b;margin-top:5px">Teacher-approved inter-college records.</p>
+                    </div>
+                </div>
+                <div class="table-wrapper">
+                    <table>
+                        <thead><tr><th>College</th><th>Fest</th><th>Event</th><th>Result</th><th>Credits</th><th>Status</th></tr></thead>
+                        <tbody>${interRows}</tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="panel" style="background:#fff7ed;border:1px solid #fed7aa">
+                <strong>Total Participation:</strong>
+                ${collegeParticipations.length + interCollegeParticipations.length} events
+                &nbsp; | &nbsp;
+                <strong>Total Credits from These Activities:</strong>
+                ${(collegeCredits + interCollegeCredits).toFixed(2)}
+            </div>
+        </div>
+    `;
+}
+
+function exportStudentReportPDF() {
+    if (!currentReportData) {
+        alert("Open a student report first.");
+        return;
+    }
+
+    const jsPDF = window.jspdf && window.jspdf.jsPDF;
+    if (!jsPDF) {
+        // Fallback: the browser's print dialog can save the report as a PDF.
+        window.print();
+        return;
+    }
+
+    const { student, collegeParticipations, interCollegeParticipations, collegeCredits, interCollegeCredits } = currentReportData;
+    const doc = new jsPDF({ orientation: "portrait", unit: "mm", format: "a4" });
+    const left = 14;
+    const pageWidth = 210;
+    const bottom = 282;
+    let y = 18;
+
+    const safe = value => String(value ?? "").replace(/[^\x20-\x7E]/g, "");
+    const ensureSpace = (needed = 8) => {
+        if (y + needed > bottom) {
+            doc.addPage();
+            y = 18;
+        }
+    };
+    const line = (label, value) => {
+        ensureSpace(7);
+        doc.setFontSize(10);
+        doc.setFont(undefined, "normal");
+        doc.text(`${label}: ${safe(value)}`, left, y);
+        y += 6;
+    };
+    const heading = text => {
+        ensureSpace(12);
+        doc.setFontSize(13);
+        doc.setFont(undefined, "bold");
+        doc.text(safe(text), left, y);
+        y += 8;
+        doc.setFont(undefined, "normal");
+    };
+    const row = values => {
+        const colX = [left, 39, 105, 157];
+        const widths = [23, 64, 51, 39];
+        ensureSpace(8);
+        doc.setFontSize(8.5);
+        values.forEach((v, i) => {
+            const lines = doc.splitTextToSize(safe(v), widths[i] - 2);
+            doc.text(lines[0] || "", colX[i], y);
+        });
+        y += 7;
+    };
+
+    doc.setFontSize(18);
+    doc.setFont(undefined, "bold");
+    doc.text("College Credit Bank", left, y);
+    y += 9;
+    doc.setFontSize(14);
+    doc.text("Individual Student Participation Report", left, y);
+    y += 10;
+    doc.setFont(undefined, "normal");
+
+    line("Student", student.name);
+    line("Student ID", student.id);
+    line("Email", student.email);
+    line("Course", student.course || "BCA Data Science");
+    line("Semester", student.semester || "5th Semester");
+
+    heading("College Events Participated");
+    row(["Date", "Event", "Venue", "Credits"]);
+    doc.line(left, y - 4, pageWidth - left, y - 4);
+
+    if (!collegeParticipations.length) {
+        row(["-", "No college events attended", "-", "0.00"]);
+    } else {
+        collegeParticipations.forEach(x => {
+            row([
+                formatDate(x.event.date),
+                x.event.name,
+                x.event.venue || "-",
+                Number(x.event.credits || 0).toFixed(2)
+            ]);
+        });
+    }
+
+    heading("Inter-College Events Participated");
+    row(["College", "Fest / Event", "Result", "Credits"]);
+    doc.line(left, y - 4, pageWidth - left, y - 4);
+
+    if (!interCollegeParticipations.length) {
+        row(["-", "No approved inter-college records", "-", "0.00"]);
+    } else {
+        interCollegeParticipations.forEach(x => {
+            row([
+                x.collegeName,
+                `${x.festName} / ${x.eventName}`,
+                x.winningCertificate ? "Won" : "Participated",
+                Number(x.awardedCredits || 0).toFixed(2)
+            ]);
+        });
+    }
+
+    heading("Summary");
+    line("College Events", collegeParticipations.length);
+    line("Inter-College Events", interCollegeParticipations.length);
+    line("College Credits", collegeCredits.toFixed(2));
+    line("Inter-College Credits", interCollegeCredits.toFixed(2));
+    line("Activity Credits", (collegeCredits + interCollegeCredits).toFixed(2));
+
+    doc.setFontSize(8);
+    doc.setFont(undefined, "normal");
+    doc.text(`Generated: ${new Date().toLocaleString()}`, left, 289);
+
+    const filename = `Student_Report_${safe(student.id || student.name).replace(/\s+/g, "_")}.pdf`;
+    doc.save(filename);
+}
+
+function closeStudentHistory() {
+    const modal = document.getElementById("studentHistoryModal");
+    if (modal) modal.style.display = "none";
+}
+
+function showStudentHistory(studentId) {
+    // Admin-only student dashboard: clicking a student's name in Admin -> Students
+    // opens a dashboard for that selected student. It does not alter the student's
+    // own portal/profile.
+    if (!currentAdmin) {
+        alert("Please use the Admin profile to view a student's dashboard.");
+        return;
+    }
+    const student = users.find(u => String(u.id) === String(studentId)) ||
+                    users.find(u => normalizeEmail(u.email) === normalizeEmail(studentId));
+    if (!student) return;
+
+    const studentRegs = registrations.filter(r => String(r.studentId) === String(student.id));
+    const attended = studentRegs.filter(r => {
+        const a = attendance.find(x => x.eventId === r.eventId && String(x.studentId) === String(student.id));
+        return a && a.status === "Present";
+    });
+    const registeredEvents = studentRegs.map(r => events.find(e => e.id === r.eventId)).filter(Boolean);
+    const interCollegeMine = interCollegeSubmissions.filter(x => String(x.studentId) === String(student.id));
+    const interCollegeApproved = interCollegeMine.filter(x => x.status === "Approved");
+    const totalEvents = events.length;
+    const totalCreditsAvailable = events.reduce((sum, e) => sum + Number(e.credits || 0), 0);
+    const registeredCredits = registeredEvents.reduce((sum, e) => sum + Number(e.credits || 0), 0);
+    const receivedCredits = attended.reduce((sum, r) => {
+        const e = events.find(x => x.id === r.eventId);
+        return sum + Number(e ? e.credits : 0);
+    }, 0);
+    // Students never create events themselves (only admins/teachers do), so counting
+    // events "created by" the student's own email always stays at 0 and never moves
+    // when a new event is added. Use the college-wide event total instead, which
+    // correctly increases every time an event is created.
+    const eventsCreatedByStudent = events.filter(e => ["admin","teacher"].includes(String(e.createdByRole || "").toLowerCase())).length;
+    const attendanceRate = registeredEvents.length ? Math.round((attended.length / registeredEvents.length) * 100) : 0;
+    const absentCount = studentRegs.filter(r => { const a = attendance.find(x => x.eventId === r.eventId && String(x.studentId) === String(student.id)); return a && a.status === "Absent"; }).length;
+    const totalParticipated = attended.length + interCollegeApproved.length;
+    const esc = value => String(value ?? "").replace(/[&<>'"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
+
+    studentHistoryCharts.forEach(chart => { try { chart.destroy(); } catch (_) {} });
+    studentHistoryCharts = [];
+
+    document.getElementById("studentHistoryTitle").textContent = `${student.name} — Student Dashboard`;
+    document.getElementById("studentHistoryBody").innerHTML = `
+        <div style="background:linear-gradient(135deg,#5b1020,#7b1e32);color:#fff;border-radius:16px;padding:22px;margin-bottom:20px">
+            <div style="display:flex;justify-content:space-between;align-items:center;gap:15px;flex-wrap:wrap">
+                <div><div style="font-size:24px;font-weight:800">${esc(student.name)}</div><div style="opacity:.9;margin-top:5px">${esc(student.id)} · ${esc(student.email)} · ${esc(student.course || "BCA Data Science")} · ${esc(student.semester || "5th Semester")}</div></div>
+                <div style="text-align:right"><div style="font-size:30px;font-weight:800">${Number(student.credits || 0).toFixed(2)}</div><div style="opacity:.9">Total Credits</div></div>
+            </div>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px">
+            <div class="stat-card"><h2>${Number(student.credits || 0).toFixed(2)}</h2><p>Total Credits</p></div>
+            <div class="stat-card"><h2>${attended.length}</h2><p>College Events Attended</p></div>
+            <div class="stat-card"><h2>${eventsCreatedByStudent}</h2><p>Total College Events</p></div>
+            <div class="stat-card"><h2>${interCollegeMine.length}</h2><p>Inter-College Submitted</p></div>
+            <div class="stat-card"><h2>${totalParticipated}</h2><p>Total Events Participated</p></div>
+        </div>
+
+        <div class="panel" style="margin-bottom:18px">
+            <div class="panel-header"><h3>Student Credit Summary</h3></div>
+            <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:10px 5px 20px">
+                <div class="stat-card"><h2>${Number(student.credits || 0).toFixed(2)}</h2><p>Total Credits</p></div>
+                <div class="stat-card"><h2>${receivedCredits.toFixed(2)}</h2><p>College Credits Received</p></div>
+                <div class="stat-card"><h2>${interCollegeApproved.reduce((s,x)=>s+Number(x.awardedCredits||0),0).toFixed(2)}</h2><p>Inter-College Credits</p></div>
+            </div>
+        </div>
+
+        <div class="panel" style="margin-bottom:18px">
+            <div class="panel-header"><div><h3>Event Participation Dashboard</h3><p style="color:#64748b;margin-top:5px">This dashboard is viewed by the Admin for the selected student.</p></div></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:22px;padding:10px 5px 20px">
+                <div style="height:310px;position:relative"><canvas id="studentEventsChart"></canvas></div>
+                <div style="height:310px;position:relative"><canvas id="studentAttendanceChart"></canvas></div>
+            </div>
+            <div style="display:grid;grid-template-columns:1fr;gap:22px;padding:0 5px 20px">
+                <div style="height:310px;position:relative"><canvas id="studentCreditUtilizationChart"></canvas></div>
+            </div>
+        </div>
+
+        <div class="panel" style="margin-bottom:18px">
+            <div class="panel-header"><h3>Student Activity Summary</h3></div>
+            <div class="table-wrapper"><table><thead><tr><th>Activity</th><th>Count</th><th>Credits</th></tr></thead><tbody>
+                <tr><td>Total college events</td><td>${eventsCreatedByStudent}</td><td>—</td></tr>
+                <tr><td>College events attended</td><td>${attended.length}</td><td>${receivedCredits.toFixed(2)}</td></tr>
+                <tr><td>Inter-college events submitted</td><td>${interCollegeMine.length}</td><td>—</td></tr>
+                <tr><td>Inter-college events approved</td><td>${interCollegeApproved.length}</td><td>${interCollegeApproved.reduce((s,x)=>s+Number(x.awardedCredits||0),0).toFixed(2)}</td></tr>
+                <tr><td><strong>Total events participated</strong></td><td><strong>${totalParticipated}</strong></td><td><strong>${(receivedCredits + interCollegeApproved.reduce((s,x)=>s+Number(x.awardedCredits||0),0)).toFixed(2)}</strong></td></tr>
+            </tbody></table></div>
+        </div>
+
+        <div class="panel" style="margin-bottom:18px">
+            <div class="panel-header"><h3>Inter-College Event Details</h3></div>
+            <div class="table-wrapper"><table><thead><tr><th>College</th><th>Fest</th><th>Event</th><th>Status</th><th>Credits</th></tr></thead><tbody>
+                ${interCollegeMine.length ? interCollegeMine.map(x => `<tr><td>${esc(x.collegeName)}</td><td>${esc(x.festName)}</td><td>${esc(x.eventName)}</td><td><span class="badge ${x.status === "Approved" ? "badge-green" : x.status === "Rejected" ? "badge-red" : "badge-orange"}">${esc(x.status)}</span></td><td>${Number(x.awardedCredits || 0).toFixed(2)}</td></tr>`).join("") : `<tr><td colspan="5" style="text-align:center;color:#64748b;padding:25px">No inter-college event records for this student.</td></tr>`}
+            </tbody></table></div>
+        </div>
+
+        <div class="panel">
+            <div class="panel-header"><h3>College Event History</h3></div>
+            <div class="table-wrapper"><table><thead><tr><th>Event</th><th>Date</th><th>Credits</th><th>Attendance</th><th>Credits Received</th></tr></thead><tbody>
+            ${registeredEvents.length ? registeredEvents.map(e => {
+                const a = attendance.find(x => x.eventId === e.id && String(x.studentId) === String(student.id));
+                const present = a && a.status === "Present";
+                return `<tr><td>${esc(e.name)}</td><td>${esc(e.date)}</td><td>${Number(e.credits || 0).toFixed(2)}</td><td>${a ? esc(a.status) : "Pending"}</td><td>${present ? Number(e.credits || 0).toFixed(2) : "0.00"}</td></tr>`;
+            }).join("") : `<tr><td colspan="5" style="text-align:center;color:#64748b;padding:25px">No college event history available for this student.</td></tr>`}
+            </tbody></table></div>
+        </div>`;
+
+    document.getElementById("studentHistoryModal").style.display = "flex";
+
+    requestAnimationFrame(() => {
+        if (typeof Chart === "undefined") return;
+        const common = {
+            responsive:true,
+            maintainAspectRatio:false,
+            plugins:{legend:{position:"bottom"}},
+            scales:{
+                y:{beginAtZero:true,grid:{display:false}},
+                x:{grid:{display:false}}
+            }
+        };
+        const eventsCanvas=document.getElementById("studentEventsChart"),
+              attendanceCanvas=document.getElementById("studentAttendanceChart"),
+              utilizationCanvas=document.getElementById("studentCreditUtilizationChart");
+
+        // Light-to-dark purple gradient for Total vs Participated Events.
+        if(eventsCanvas) {
+            const ctx = eventsCanvas.getContext("2d");
+            const grad = ctx.createLinearGradient(0, 0, 0, eventsCanvas.clientHeight || 300);
+            grad.addColorStop(0, "#ede9fe");
+            grad.addColorStop(0.5, "#a78bfa");
+            grad.addColorStop(1, "#5b21b6");
+            studentHistoryCharts.push(new Chart(eventsCanvas,{
+                type:"bar",
+                data:{
+                    labels:["Total College Events","College Attended","Inter-College Participated"],
+                    datasets:[{label:"Events",data:[eventsCreatedByStudent,attended.length,interCollegeApproved.length],backgroundColor:grad,borderWidth:0,borderRadius:8}]
+                },
+                options:{...common,plugins:{...common.plugins,title:{display:true,text:"Total vs Participated Events"}}}
+            }));
+        }
+
+        // Donut chart: Present is green, registered-but-not-present is red.
+        if(attendanceCanvas) studentHistoryCharts.push(new Chart(attendanceCanvas,{
+            type:"doughnut",
+            data:{
+                labels:["College Event Present","College Event Absent"],
+                datasets:[{
+                    data:[attended.length,absentCount],
+                    backgroundColor:["#16a34a","#dc2626"],
+                    borderWidth:0,
+                    hoverOffset:5
+                }]
+            },
+            options:{
+                responsive:true,
+                maintainAspectRatio:false,
+                cutout:"62%",
+                plugins:{
+                    legend:{position:"bottom"},
+                    title:{display:true,text:"College Event Attendance"}
+                }
+            }
+        }));
+
+        // Dark-blue gradient for Credit Activity.
+        if(utilizationCanvas) {
+            const ctx = utilizationCanvas.getContext("2d");
+            const grad = ctx.createLinearGradient(0, 0, 0, utilizationCanvas.clientHeight || 300);
+            grad.addColorStop(0, "#bfdbfe");
+            grad.addColorStop(0.45, "#2563eb");
+            grad.addColorStop(1, "#172554");
+            studentHistoryCharts.push(new Chart(utilizationCanvas,{
+                type:"bar",
+                data:{
+                    labels:["Available College Credits","Received College Credits","Approved Inter-College Credits"],
+                    datasets:[{label:"Credits",data:[totalCreditsAvailable,receivedCredits,interCollegeApproved.reduce((s,x)=>s+Number(x.awardedCredits||0),0)],backgroundColor:grad,borderWidth:0,borderRadius:8}]
+                },
+                options:{...common,plugins:{...common.plugins,title:{display:true,text:"Credit Activity"}}}
+            }));
+        }
+    });
+}
+/* =====================================================
+   EVENT MANAGEMENT
+===================================================== */
+
+function openEventModal() {
+    // Close other overlays first so an old modal cannot sit above the
+    // Create Event form and block mouse/keyboard input.
+    const historyModal = document.getElementById("studentHistoryModal");
+    const detailsModal = document.getElementById("detailsModal");
+    if (historyModal) historyModal.style.display = "none";
+    if (detailsModal) detailsModal.style.display = "none";
+
+    const select = document.getElementById("eventInchargeTeacher");
+    if (!select) return;
+    select.innerHTML = teacherCredentials.map(t => `<option value="${t.email}">${t.name}</option>`).join("");
+    if(currentTeacher) select.value = currentTeacher.email;
+
+    // Prevent picking a date that has already passed. The date input uses
+    // the browser's local date, so build today's date from local values
+    // rather than an ISO/UTC string (which can be off by a day near midnight).
+    const dateField = document.getElementById("eventDate");
+    if (dateField) {
+        const today = new Date();
+        const todayStr = today.getFullYear() + "-" + String(today.getMonth()+1).padStart(2,"0") + "-" + String(today.getDate()).padStart(2,"0");
+        dateField.min = todayStr;
+    }
+
+    const modal = document.getElementById("eventModal");
+    if (!modal) return;
+    modal.style.display = "flex";
+    modal.style.zIndex = "10000";
+
+    // Explicitly restore normal interaction for every form control.
+    const form = document.getElementById("createEventForm");
+    if (form) {
+        form.style.pointerEvents = "auto";
+        form.querySelectorAll("input, select, textarea, button").forEach(el => {
+            el.style.pointerEvents = "auto";
+            el.disabled = false;
+        });
+    }
+
+    requestAnimationFrame(() => {
+        const first = document.getElementById("eventName");
+        if (first) first.focus();
+    });
+}
+
+
+function closeEventModal() {
+
+    document.getElementById("eventModal")
+        .style.display = "none";
+
+}
+
+
+function createEvent(event) {
+    // This function is intentionally safe for both Admin and Teacher.
+    // It never navigates/reloads the page and never calls logout().
+    if (event) event.preventDefault();
+
+    const form = document.getElementById("createEventForm");
+    if (!form) {
+        console.error("Create Event form was not found.");
+        return false;
+    }
+
+    const get = id => document.getElementById(id);
+    const name = get("eventName").value.trim();
+    const teacherEmail = get("eventInchargeTeacher").value.trim().toLowerCase();
+    const contact = get("eventContact").value.trim();
+    const date = get("eventDate").value;
+    const startTime = get("eventStartTime").value;
+    const endTime = get("eventEndTime").value;
+    const venue = get("eventVenue").value.trim();
+    const credits = parseFloat(get("eventCredits").value);
+    const capacity = Number(get("eventCapacity").value);
+    const deadline = get("registrationDeadline").value;
+    const description = get("eventDescription").value.trim() || "Event";
+
+    // Explicit validation instead of browser form navigation/validation.
+    if (!name || !teacherEmail || !contact || !date || !startTime ||
+        !endTime || !venue || !Number.isFinite(credits) || credits <= 0 || !capacity || !deadline) {
+        alert("Please fill in all required event details.");
+        return false;
+    }
+
+    if (!/^[0-9]{10}$/.test(contact)) {
+        alert("Please enter a valid 10-digit contact number.");
+        return false;
+    }
+
+    if (endTime <= startTime) {
+        alert("End time must be later than start time.");
+        return false;
+    }
+
+    const today = new Date();
+    const todayStr = today.getFullYear() + "-" + String(today.getMonth()+1).padStart(2,"0") + "-" + String(today.getDate()).padStart(2,"0");
+    if (date < todayStr) {
+        alert("Event date cannot be in the past. Please choose today or a future date.");
+        return false;
+    }
+
+    if (deadline > date) {
+        alert("Registration deadline cannot be after the event date.");
+        return false;
+    }
+
+    const teacher = teacherCredentials.find(
+        t => t.email.toLowerCase() === teacherEmail
+    );
+
+    if (!teacher) {
+        alert("Please select a valid in-charge teacher.");
+        return false;
+    }
+
+    const newEvent = {
+        id: "EVT" + Date.now(),
+        name,
+        description,
+        inchargeTeacher: teacher.name,
+        inchargeEmail: teacher.email,
+        createdByRole: currentTeacher ? "teacher" : "admin",
+        createdByEmail: currentTeacher ? currentTeacher.email : (currentAdmin ? currentAdmin.email : ""),
+        contact,
+        date,
+        startTime,
+        endTime,
+        venue,
+        credits,
+        capacity,
+        deadline,
+        status: "Open"
+    };
+
+    // Save the event first. Nothing below this point is allowed to log out
+    // or navigate away from the current portal.
+    events.push(newEvent);
+
+    // Persist to the backend/SQL database. Without this call the event only
+    // ever lived in memory, and the periodic syncServerState() poll (every
+    // 5s) would overwrite `events` with the server's (event-less) copy,
+    // making newly created events disappear a few seconds after creation.
+    if (!saveAppData()) {
+        events.pop();
+        alert("The event could not be saved. Please make sure the backend server is running.");
+        return false;
+    }
+
+    // Remember the current portal BEFORE closing the modal.
+    const adminApp = document.getElementById("adminApp");
+    const teacherApp = document.getElementById("teacherApp");
+    const loginPage = document.getElementById("loginPage");
+
+    const wasAdmin = adminApp && adminApp.style.display !== "none";
+    const wasTeacher = teacherApp && teacherApp.style.display !== "none";
+
+    form.reset();
+    closeEventModal();
+
+    // Keep the exact portal that was already open.
+    if (loginPage) loginPage.style.display = "none";
+    if (wasAdmin && adminApp) adminApp.style.display = "block";
+    if (wasTeacher && teacherApp) teacherApp.style.display = "block";
+
+    // Refresh only the event-related views. If another unrelated dashboard
+    // widget has an issue, it must not undo the successful event creation.
+    try { renderAdminEvents(); } catch (err) { console.warn("Admin event refresh:", err); }
+    try { renderTeacherEvents(); } catch (err) { console.warn("Teacher event refresh:", err); }
+    try { renderAdminCredits(); } catch (err) { console.warn("Admin credit refresh:", err); }
+
+    alert("Event created successfully!");
+    return false;
+}
+
+
+/* =====================================================
+   ADMIN EVENT LIST
+===================================================== */
+
+function renderAdminEvents() {
+
+    const container =
+        document.getElementById("adminEventList");
+
+
+    if (container) container.innerHTML = events.map(event => {
+
+        const count =
+            registrations.filter(
+                r => r.eventId === event.id
+            ).length;
+
+
+        return `
+
+        <div class="panel"
+             style="border:1px solid #e2e8f0;">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h3>${event.name}</h3>
+
+                    <p style="color:#64748b;margin-top:5px">
+                        ${event.description}
+                    </p>
+
+                </div>
+
+                <span class="badge badge-green">
+                    ${event.status}
+                </span>
+
+            </div>
+
+
+            <div class="grid-2">
+
+                <div>
+
+                    <p class="event-detail">
+                        📅 <b>Date:</b> ${formatDate(event.date)}
+                    </p>
+
+                    <p class="event-detail">👨‍🏫 <b>In-charge:</b> ${event.inchargeTeacher || "-"}</p>
+                    <p class="event-detail">📞 <b>Contact:</b> ${event.contact || "-"}</p>
+                    <p class="event-detail">📍 <b>Venue:</b> ${event.venue}</p>
+                    <p class="event-detail">⏰ <b>Time:</b> ${event.startTime || "-"} - ${event.endTime || "-"}</p>
+
+                    <p class="event-detail">
+                        🎓 <b>Credits:</b> ${Number(event.credits || 0).toFixed(2)}
+                    </p>
+
+                </div>
+
+
+                <div>
+
+                    <p class="event-detail">
+                        👨‍🎓 <b>Registrations:</b>
+                        ${count}/${event.capacity}
+                    </p>
+
+                    <p class="event-detail">
+                        ⏰ <b>Registration Deadline:</b>
+                        ${formatDate(event.deadline)}
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div style="display:flex;gap:8px;flex-wrap:wrap">
+                <button
+                    class="btn btn-secondary"
+                    onclick="viewEventRegistrations('${event.id}')">
+                    View Registrations
+                </button>
+                <button
+                    class="btn btn-danger"
+                    onclick="deleteEvent('${event.id}', 'admin')">
+                    Delete Event
+                </button>
+            </div>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+
+    const adminEventCountEl = document.getElementById("adminEventCount");
+    if (adminEventCountEl) adminEventCountEl.textContent = events.length;
+
+
+    const adminRegCountEl = document.getElementById("adminRegistrationCount");
+    if (adminRegCountEl) adminRegCountEl.textContent = registrations.length;
+
+}
+
+
+/* =====================================================
+   VIEW REGISTRATIONS
+===================================================== */
+
+function viewEventRegistrations(eventId) {
+    const event = events.find(e => e.id === eventId); if(!event) return;
+    const list = registrations.filter(r => r.eventId === eventId);
+    document.getElementById("detailsModalTitle").textContent = event.name + " - Registered Students";
+    document.getElementById("detailsModalBody").innerHTML = list.length ? `
+        <div class="table-wrapper"><table><thead><tr><th>Name</th><th>Register No.</th><th>Course</th><th>Semester</th><th>Email</th><th>Contact</th><th>Year</th><th>Attendance</th><th>Credits</th></tr></thead>
+        <tbody>${list.map(r => { const att=attendance.find(a=>a.eventId===eventId&&a.studentId===r.studentId); const stu=users.find(u=>u.id===r.studentId); return `<tr><td>${r.name}</td><td>${r.registerNo}</td><td>${r.course}</td><td>${stu?stu.semester:""}</td><td>${r.email}</td><td>${r.contact}</td><td>${r.year}</td><td>${att?att.status:"Pending"}</td><td>${att&&att.status==="Present"?"+"+event.credits:"0"}</td></tr>`; }).join("")}</tbody></table></div>` : `<div style="padding:30px;text-align:center;color:#64748b">No students have registered for this event.</div>`;
+    document.getElementById("detailsModal").style.display="flex";
+}
+function closeDetailsModal(){ document.getElementById("detailsModal").style.display="none"; }
+
+
+/* =====================================================
+   DELETE EVENT
+===================================================== */
+function deleteEvent(eventId, requestedBy) {
+    const event = events.find(e => e.id === eventId);
+    if (!event) return;
+
+    // Admin can delete any event. A teacher can delete only an event
+    // assigned to that teacher.
+    if (requestedBy === "teacher") {
+        if (!currentTeacher) {
+            alert("Teacher session not found. Please log in again.");
+            return;
+        }
+        const teacherEmail = normalizeEmail(currentTeacher.email);
+        const teacherName = String(currentTeacher.name || "").trim().toLowerCase();
+        const eventTeacherName = String(event.inchargeTeacher || "").trim().toLowerCase();
+        const isOwnedByTeacher =
+            normalizeEmail(event.createdByEmail || "") === teacherEmail ||
+            normalizeEmail(event.inchargeEmail || "") === teacherEmail ||
+            (teacherName && eventTeacherName && eventTeacherName === teacherName);
+        if (!isOwnedByTeacher) {
+            alert("You can delete only the events assigned to you.");
+            return;
+        }
+    }
+
+    const count = registrations.filter(r => r.eventId === eventId).length;
+    const message = count
+        ? `Delete "${event.name}"? This will also remove its ${count} registration(s), attendance records and any event credits already awarded.`
+        : `Delete "${event.name}"? This action cannot be undone.`;
+
+    if (!confirm(message)) return;
+
+    // If attendance was already marked Present, remove the credits that
+    // were awarded for this event before deleting its records.
+    const presentStudentIds = new Set(
+        attendance
+            .filter(a => a.eventId === eventId && a.status === "Present")
+            .map(a => a.studentId)
+    );
+
+    presentStudentIds.forEach(studentId => {
+        const student = users.find(u => u.id === studentId);
+        if (student) student.credits = Math.max(0, Number(student.credits || 0) - Number(event.credits || 0));
+    });
+
+    pendingDeletes.events.add(eventId);
+    // Event deletion cascades its registrations/attendance/credit transactions
+    // in SQLite, so the event itself is the only delete that must be sent.
+    events = events.filter(e => e.id !== eventId);
+    registrations = registrations.filter(r => r.eventId !== eventId);
+    attendance = attendance.filter(a => a.eventId !== eventId);
+    creditTransactions = creditTransactions.filter(t => t.eventId !== eventId);
+
+    saveAppData();
+
+    closeDetailsModal();
+    renderAll();
+    if (currentStudent) renderStudent();
+
+    alert("Event deleted successfully.");
+}
+
+
+/* =====================================================
+   STUDENT EVENT VIEW
+===================================================== */
+
+function renderStudentEvents() {
+
+    const grid =
+        document.getElementById("studentEventGrid");
+
+
+    grid.innerHTML = events.map(event => {
+
+        const registration =
+            registrations.find(
+                r =>
+                    r.eventId === event.id &&
+                    r.studentId === currentStudent.id
+            );
+
+
+        const count =
+            registrations.filter(
+                r => r.eventId === event.id
+            ).length;
+
+
+        let button = "";
+
+
+        if(registration) {
+
+            const att =
+                attendance.find(
+                    a =>
+                        a.eventId === event.id &&
+                        a.studentId === currentStudent.id
+                );
+
+
+            if(att && att.status === "Present") {
+
+                button = `
+                    <span class="badge badge-green">
+                        ✓ Attended & Credits Awarded
+                    </span>
+                `;
+
+            }
+
+            else if(att && att.status === "Absent") {
+
+                button = `
+                    <span class="badge badge-red">
+                        Absent - No Credits
+                    </span>
+                `;
+
+            }
+
+            else {
+
+                button = `
+                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
+                        <span class="badge badge-blue">
+                            ✓ Registered
+                        </span>
+                        <button
+                            class="btn btn-danger"
+                            onclick="unregisterFromEvent('${event.id}')">
+                            Unregister
+                        </button>
+                    </div>
+                `;
+
+            }
+
+        }
+
+        else if(count >= event.capacity) {
+
+            button = `
+                <span class="badge badge-red">
+                    Event Full
+                </span>
+            `;
+
+        }
+
+        else {
+
+            button = `
+                <button
+                    class="btn btn-primary"
+                    onclick="registerForEvent('${event.id}')">
+                    Register
+                </button>
+            `;
+
+        }
+
+
+        return `
+
+        <div class="event-card">
+
+            <div class="event-top">
+
+                <h3>${event.name}</h3>
+
+                <small>
+                    ${Number(event.credits || 0).toFixed(2)} Credit(s)
+                </small>
+
+            </div>
+
+
+            <div class="event-body">
+
+                <p class="event-detail">
+                    📅 ${formatDate(event.date)}
+                </p>
+
+                <p class="event-detail">👨‍🏫 <b>In-charge:</b> ${event.inchargeTeacher || "-"}</p>
+                <p class="event-detail">📞 <b>Contact:</b> ${event.contact || "-"}</p>
+                <p class="event-detail">📍 ${event.venue}</p>
+                <p class="event-detail">⏰ ${event.startTime || "-"} - ${event.endTime || "-"}</p>
+
+                <p class="event-detail">
+                    👨‍🎓 ${count}/${event.capacity} registered
+                </p>
+
+                <p class="event-detail">
+                    ⏰ Registration closes
+                    ${formatDate(event.deadline)}
+                </p>
+
+
+                <p style="
+                    margin-top:12px;
+                    color:#64748b;
+                    font-size:13px;
+                ">
+                    ${event.description}
+                </p>
+
+
+                <div class="event-footer">
+
+                    ${button}
+
+                </div>
+
+            </div>
+
+        </div>
+
+        `;
+
+    }).join("");
+
+}
+
+
+/* =====================================================
+   REGISTER FOR EVENT
+===================================================== */
+
+function registerForEvent(eventId) {
+    const event=events.find(e=>e.id===eventId); if(!event||!currentStudent) return;
+    if(registrations.find(r=>r.eventId===eventId&&r.studentId===currentStudent.id)){alert("You are already registered.");return;}
+    if(registrations.filter(r=>r.eventId===eventId).length>=event.capacity){alert("This event is full.");return;}
+    if(event.deadline && new Date(event.deadline+"T23:59:59")<new Date()){alert("Registration deadline has passed.");return;}
+    document.getElementById("registrationEventId").value=eventId;
+    document.getElementById("regStudentName").value=currentStudent.name||"";
+    document.getElementById("regStudentRegisterNo").value=currentStudent.registerNo||"";
+    document.getElementById("regStudentCourse").value=currentStudent.course||"";
+    document.getElementById("regStudentEmail").value=currentStudent.email||"";
+    document.getElementById("regStudentContact").value=currentStudent.contact||"";
+    document.getElementById("regStudentYear").value=currentStudent.year||"";
+    document.getElementById("registrationModal").style.display="flex";
+}
+function closeRegistrationModal(){document.getElementById("registrationModal").style.display="none";}
+
+function unregisterFromEvent(eventId) {
+    if (!currentStudent) return;
+
+    const event = events.find(e => e.id === eventId);
+    if (!event) return;
+
+    const registration = registrations.find(
+        r => r.eventId === eventId && r.studentId === currentStudent.id
+    );
+    if (!registration) {
+        alert("You are not registered for this event.");
+        return;
+    }
+
+    const att = attendance.find(
+        a => a.eventId === eventId && a.studentId === currentStudent.id
+    );
+
+    if (att) {
+        alert("You cannot unregister after attendance has been recorded for this event.");
+        return;
+    }
+
+    if (!confirm(`Unregister from "${event.name}"?`)) return;
+
+    const removedRegistration = registrations.find(
+        r => r.eventId === eventId && r.studentId === currentStudent.id
+    );
+    if (removedRegistration) pendingDeletes.registrations.add(removedRegistration.id);
+    registrations = registrations.filter(
+        r => !(r.eventId === eventId && r.studentId === currentStudent.id)
+    );
+
+    saveAppData();
+    renderStudent();
+    renderAll();
+
+    alert("You have been unregistered successfully.");
+}
+
+function submitRegistration(e){
+    e.preventDefault(); const eventId=document.getElementById("registrationEventId").value; const event=events.find(e=>e.id===eventId); if(!event)return;
+    if(registrations.find(r=>r.eventId===eventId&&r.studentId===currentStudent.id)){alert("You are already registered.");closeRegistrationModal();return;}
+    const details={name:document.getElementById("regStudentName").value.trim(),registerNo:document.getElementById("regStudentRegisterNo").value.trim(),course:document.getElementById("regStudentCourse").value.trim(),semester:currentStudent.semester || "5th Semester",email:document.getElementById("regStudentEmail").value.trim(),contact:document.getElementById("regStudentContact").value.trim(),year:document.getElementById("regStudentYear").value};
+    // Update the master student record so the registered student is
+    // immediately available in Admin -> Students as well as Teacher -> Registrations.
+    const studentIndex = users.findIndex(u => u.id === currentStudent.id);
+    if (studentIndex !== -1) {
+        Object.assign(users[studentIndex], details);
+        currentStudent = users[studentIndex];
+    } else {
+        Object.assign(currentStudent, details);
+        users.push(currentStudent);
+    }
+    pendingStudentUpdates.set(String(currentStudent.id), {
+        id: currentStudent.id,
+        name: currentStudent.name,
+        course: currentStudent.course || "",
+        year: currentStudent.year || "",
+        semester: currentStudent.semester || "5th Semester",
+        contact: currentStudent.contact || "",
+        mentor: currentStudent.mentor || "",
+        department: currentStudent.department || ""
+    });
+
+    registrations.push({
+        id: "REG" + String(registrations.length + 1).padStart(3, "0"),
+        eventId,
+        studentId: currentStudent.id,
+        registrationDate: new Date().toISOString().split("T")[0],
+        ...details
+    });
+
+    // Persist the registration immediately. This is what makes it visible
+    // after switching roles, logging out/in, or refreshing the page.
+    saveAppData();
+
+    closeRegistrationModal();
+    alert("Registration successful!\n\nEvent: " + event.name);
+    renderStudent();
+    renderAll();
+    renderAdminStudents();
+    renderTeacherRegistrations(eventId);
+}
+
+
+/* =====================================================
+   TEACHER ATTENDANCE
+===================================================== */
+
+function renderTeacherEvents() {
+
+    const teacherEventCountEl = document.getElementById("teacherEventCount");
+    if (teacherEventCountEl) teacherEventCountEl.textContent = events.length;
+
+
+    const teacherRegCountEl = document.getElementById("teacherRegistrationCount");
+    // Count unique students, not registration rows. One student registering
+    // for 50 events must still count as exactly 1 registered student.
+    const uniqueTeacherStudentIds = new Set(
+        registrations
+            .map(r => String(r.studentId || "").trim())
+            .filter(Boolean)
+    );
+    if (teacherRegCountEl) teacherRegCountEl.textContent = uniqueTeacherStudentIds.size;
+
+
+    const teacherEventListEl = document.getElementById("teacherEventList");
+    if (teacherEventListEl) teacherEventListEl.innerHTML = events.map(event => `
+
+        <div class="panel"
+             style="border:1px solid #e2e8f0;">
+
+            <div class="panel-header">
+
+                <div>
+
+                    <h3>${event.name}</h3>
+
+                    <p style="color:#64748b;margin-top:5px">
+                        ${formatDate(event.date)}
+                        · ${event.venue}
+                    </p>
+
+                </div>
+
+                <div style="display:flex;gap:8px;flex-wrap:wrap">
+                    <button class="btn btn-secondary" onclick="openTeacherRegistrations('${event.id}')">View Registrations</button>
+                    <button class="btn btn-primary" onclick="openAttendance('${event.id}')">Take Attendance</button>
+                    ${currentTeacher && (normalizeEmail(event.createdByEmail || "") === normalizeEmail(currentTeacher.email) || normalizeEmail(event.inchargeEmail || "") === normalizeEmail(currentTeacher.email) || String(event.inchargeTeacher || "").trim().toLowerCase() === String(currentTeacher.name || "").trim().toLowerCase()) ? `
+                        <button class="btn btn-danger" onclick="deleteEvent('${event.id}', 'teacher')">Delete Event</button>
+                    ` : ""}
+                </div>
+
+            </div>
+
+        </div>
+
+    `).join("");
+
+
+    const select =
+        document.getElementById(
+            "attendanceEventSelect"
+        );
+
+    // Preserve the teacher's currently selected event when the dashboard
+    // re-renders (for example after attendance is saved or during polling).
+    // Previously innerHTML reset the select to its first option, which made
+    // attendance for every other event jump back to the first event.
+    const previouslySelectedEventId = select ? select.value : "";
+
+    const attendanceOptionsHtml = events.map(event => `
+
+        <option value="${event.id}">
+            ${event.name} - ${formatDate(event.date)}
+        </option>
+
+    `).join("");
+    if (select) {
+        select.innerHTML = attendanceOptionsHtml;
+        if (previouslySelectedEventId && events.some(e => String(e.id) === String(previouslySelectedEventId))) {
+            select.value = previouslySelectedEventId;
+        } else if (events.length) {
+            select.value = String(events[0].id);
+        }
+    }
+
+    const regSelect=document.getElementById("teacherRegistrationEventSelect");
+    const previousRegistrationEventId = regSelect ? regSelect.value : "";
+    if(regSelect){
+        regSelect.innerHTML=attendanceOptionsHtml;
+        if(previousRegistrationEventId && events.some(e => String(e.id) === String(previousRegistrationEventId))) {
+            regSelect.value = previousRegistrationEventId;
+        } else if(events.length) {
+            regSelect.value = String(events[0].id);
+        }
+        if(events.length) renderTeacherRegistrations(regSelect.value);
+    }
+
+    if(events.length > 0) {
+        loadAttendance();
+    }
+
+}
+
+
+/* =====================================================
+   TEACHER REGISTRATIONS
+===================================================== */
+function loadTeacherRegistrations(){const s=document.getElementById("teacherRegistrationEventSelect");if(s&&s.value)renderTeacherRegistrations(s.value);}
+function openTeacherRegistrations(eventId){const s=document.getElementById("teacherRegistrationEventSelect");if(s)s.value=eventId;const nav=document.querySelector("#teacherApp .nav-item[onclick*=\"teacherRegistrations\"]");teacherSection("teacherRegistrations",nav);renderTeacherRegistrations(eventId);}
+function renderTeacherRegistrations(eventId){const event=events.find(e=>e.id===eventId),list=registrations.filter(r=>r.eventId===eventId),area=document.getElementById("teacherRegistrationArea");if(!area||!event)return;area.innerHTML=list.length?`<div class="table-wrapper"><table><thead><tr><th>Name</th><th>Register No.</th><th>Course</th><th>Semester</th><th>Email</th><th>Contact</th><th>Year</th><th>Attendance</th><th>Credits</th></tr></thead><tbody>${list.map(r=>{const a=attendance.find(x=>x.eventId===eventId&&x.studentId===r.studentId);const stu=users.find(u=>u.id===r.studentId);return `<tr><td>${r.name}</td><td>${r.registerNo}</td><td>${r.course}</td><td>${stu?stu.semester:""}</td><td>${r.email}</td><td>${r.contact}</td><td>${r.year}</td><td>${a?a.status:"Pending"}</td><td>${a&&a.status==="Present"?"+"+event.credits:"0"}</td></tr>`}).join("")}</tbody></table></div>`:`<div style="padding:30px;text-align:center;color:#64748b">No students have registered for this event.</div>`;}
+
+
+/* =====================================================
+   OPEN ATTENDANCE
+===================================================== */
+
+function openAttendance(eventId) {
+
+    document.getElementById(
+        "attendanceEventSelect"
+    ).value = eventId;
+
+
+    const nav = document.querySelector("#teacherApp .nav-item[onclick*=\"teacherAttendance\"]");
+    teacherSection("teacherAttendance", nav);
+
+
+    loadAttendance();
+
+}
+
+
+function loadAttendance() {
+
+    const eventId =
+        document.getElementById(
+            "attendanceEventSelect"
+        ).value;
+
+
+    if(!eventId) return;
+
+
+    const event =
+        events.find(e => e.id === eventId);
+
+
+    const registered =
+        registrations.filter(
+            r => r.eventId === eventId
+        );
+
+
+    const area =
+        document.getElementById(
+            "attendanceArea"
+        );
+
+
+    if(registered.length === 0) {
+
+        area.innerHTML = `
+
+            <div style="
+                padding:30px;
+                text-align:center;
+                color:#64748b;
+            ">
+
+                No students have registered for this event.
+
+            </div>
+
+        `;
+
+        return;
+    }
+
+
+    area.innerHTML = `
+
+        <div style="
+            padding:14px;
+            background:#eff6ff;
+            border-radius:8px;
+            margin-bottom:18px;
+        ">
+
+            <strong>${event.name}</strong>
+
+            <br>
+
+            <small>
+                Students marked Present will automatically
+                receive ${event.credits} credit(s).
+            </small>
+
+        </div>
+
+
+        <div class="table-wrapper">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>Student ID</th>
+
+                        <th>Student</th>
+
+                        <th>Course</th>
+
+                        <th>Attendance</th>
+
+                        <th>Credit</th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    ${registered.map(r => {
+
+                        const student =
+                            users.find(
+                                u =>
+                                    u.id === r.studentId
+                            );
+
+
+                        const att =
+                            attendance.find(
+                                a =>
+                                    a.eventId === eventId &&
+                                    a.studentId === student.id
+                            );
+
+
+                        let statusText =
+                            att
+                            ? att.status
+                            : "Pending";
+
+
+                        let creditText =
+                            att &&
+                            att.status === "Present"
+                            ? event.credits
+                            : "0";
+
+
+                        return `
+
+                        <tr>
+
+                            <td>${student.id}</td>
+
+                            <td>${student.name}</td>
+
+                            <td>${student.course}</td>
+
+                            <td>
+
+                                <button
+                                    class="btn ${
+                                        att &&
+                                        att.status === "Present"
+                                        ? "btn-success"
+                                        : "btn-secondary"
+                                    }"
+                                    onclick="
+                                        markAttendance(
+                                            '${eventId}',
+                                            '${student.id}',
+                                            'Present'
+                                        )">
+
+                                    ✓ Present
+
+                                </button>
+
+
+                                <button
+                                    class="btn ${
+                                        att &&
+                                        att.status === "Absent"
+                                        ? "btn-danger"
+                                        : "btn-secondary"
+                                    }"
+                                    onclick="
+                                        markAttendance(
+                                            '${eventId}',
+                                            '${student.id}',
+                                            'Absent'
+                                        )">
+
+                                    ✕ Absent
+
+                                </button>
+
+                            </td>
+
+                            <td>
+
+                                ${
+                                    att &&
+                                    att.status === "Present"
+
+                                    ? `
+                                    <span class="badge badge-green">
+                                        +${Number(event.credits || 0).toFixed(2)}
+                                    </span>
+                                    `
+
+                                    : `
+                                    <span class="badge badge-red">
+                                        0
+                                    </span>
+                                    `
+                                }
+
+                            </td>
+
+                        </tr>
+
+                        `;
+
+                    }).join("")}
+
+                </tbody>
+
+            </table>
+
+        </div>
+
+    `;
+
+}
+
+
+/* =====================================================
+   MARK ATTENDANCE
+===================================================== */
+
+function markAttendance(
+    eventId,
+    studentId,
+    status
+) {
+
+    const event =
+        events.find(e => e.id === eventId);
+
+
+    const student =
+        users.find(u => u.id === studentId);
+
+
+    const existing =
+        attendance.find(
+            a =>
+                a.eventId === eventId &&
+                a.studentId === studentId
+        );
+
+
+    /*
+       IMPORTANT:
+
+       If Present -> Credits awarded.
+
+       If changed from Present to Absent ->
+       previously awarded event credits are removed.
+
+       This prevents incorrect/double credits.
+    */
+
+
+    if(existing) {
+
+        const oldStatus =
+            existing.status;
+
+
+        if(
+            oldStatus === "Present" &&
+            status === "Absent"
+        ) {
+
+            student.credits -= event.credits;
+
+
+            const transactionIndex =
+                creditTransactions.findIndex(
+                    t =>
+                        t.eventId === eventId &&
+                        t.studentId === studentId
+                );
+
+
+            if(transactionIndex !== -1) {
+                const removedTransaction = creditTransactions[transactionIndex];
+                if (removedTransaction && removedTransaction.id != null) {
+                    pendingDeletes.creditTransactions.add(removedTransaction.id);
+                }
+                creditTransactions.splice(transactionIndex, 1);
+            }
+
+        }
+
+
+        if(
+            oldStatus === "Absent" &&
+            status === "Present"
+        ) {
+
+            student.credits += event.credits;
+
+
+            creditTransactions.push({
+
+                studentId: studentId,
+
+                eventId: eventId,
+
+                date:
+                    new Date()
+                    .toISOString()
+                    .split("T")[0],
+
+                activity: event.name,
+
+                credits: event.credits
+
+            });
+
+        }
+
+
+        existing.status = status;
+
+    }
+
+    else {
+
+        attendance.push({
+
+            eventId: eventId,
+
+            studentId: studentId,
+
+            status: status,
+
+            markedAt:
+                new Date().toISOString()
+
+        });
+
+
+        if(status === "Present") {
+
+            student.credits += event.credits;
+
+
+            creditTransactions.push({
+
+                studentId: studentId,
+
+                eventId: eventId,
+
+                date:
+                    new Date()
+                    .toISOString()
+                    .split("T")[0],
+
+                activity: event.name,
+
+                credits: event.credits
+
+            });
+
+        }
+
+    }
+
+    // Persist attendance and awarded credits immediately. Without this save,
+    // the UI can show the new status until the next reload but the browser
+    // storage still contains the old attendance data.
+    if (!saveAppData()) return;
+
+    loadAttendance();
+
+    renderStudent();
+
+    renderAll();
+
+
+    if(status === "Present") {
+
+        alert(
+            student.name +
+            " marked PRESENT.\n\n" +
+            "+" +
+            event.credits +
+            " credit(s) awarded."
+        );
+
+    }
+
+    else {
+
+        alert(
+            student.name +
+            " marked ABSENT.\n\n" +
+            "No event credits awarded."
+        );
+
+    }
+
+}
+
+
+/* =====================================================
+   STUDENT RENDER
+===================================================== */
+
+function renderStudent() {
+
+    if(!currentStudent) return;
+
+
+    const student =
+        users.find(
+            u => u.id === currentStudent.id
+        );
+
+
+    currentStudent = student;
+
+
+    document.getElementById(
+        "studentNameTop"
+    ).textContent = student.name;
+
+
+    document.getElementById(
+        "studentIdTop"
+    ).textContent = student.id;
+
+
+    document.getElementById(
+        "studentCourseSemesterTop"
+    ).textContent = `${student.course || "BCA Data Science"} · ${student.semester || "5th Semester"}`;
+
+
+    document.getElementById(
+        "studentAvatar"
+    ).textContent = student.avatar;
+
+
+    document.getElementById(
+        "studentWelcome"
+    ).textContent =
+        "Welcome, " + student.name;
+
+
+    document.getElementById(
+        "myCredits"
+    ).textContent = student.credits;
+
+
+    const myRegistrations =
+        registrations.filter(
+            r => r.studentId === student.id
+        );
+
+
+    document.getElementById(
+        "myEvents"
+    ).textContent =
+        myRegistrations.length;
+
+
+    const myAttendance =
+        attendance.filter(
+            a =>
+                a.studentId === student.id &&
+                a.status === "Present"
+        );
+
+
+    document.getElementById(
+        "myAttended"
+    ).textContent =
+        myAttendance.length;
+
+
+    const eventCredits =
+        creditTransactions
+            .filter(t => t.studentId === student.id)
+            .reduce((sum,t) => sum + Number(t.credits || 0), 0)
+        + interCollegeSubmissions
+            .filter(x => x.studentId === student.id && x.status === "Approved")
+            .reduce((sum,x) => sum + Number(x.awardedCredits || 0), 0);
+
+
+    document.getElementById(
+        "myEventCredits"
+    ).textContent = eventCredits;
+
+
+    document.getElementById(
+        "creditsPageTotal"
+    ).textContent = student.credits;
+
+
+    document.getElementById(
+        "creditsPageEvent"
+    ).textContent = eventCredits;
+
+
+    renderStudentEvents();
+    renderInterCollegeStudent();
+    populateInterCollegeAssignees();
+
+    renderStudentHistory();
+
+}
+
+
+/* =====================================================
+   STUDENT HISTORY
+===================================================== */
+
+function renderStudentHistory() {
+    const normalTransactions = creditTransactions.filter(t => t.studentId === currentStudent.id).map(t => ({
+        date: t.date, activity: t.activity, credits: Number(t.credits || 0), type: "Event"
+    }));
+    const interTransactions = interCollegeSubmissions
+        .filter(x => x.studentId === currentStudent.id && x.status === "Approved")
+        .map(x => ({
+            date: x.reviewedAt ? x.reviewedAt.split("T")[0] : x.submittedAt.split("T")[0],
+            activity: `Inter-College: ${x.eventName}`,
+            credits: Number(x.awardedCredits || 0), type: "Inter-College"
+        }));
+    const transactions = normalTransactions.concat(interTransactions).sort((a,b) => String(b.date).localeCompare(String(a.date)));
+    let balance = Number(currentStudent.credits || 0);
+    const rows = transactions.map(t => `
+        <tr>
+            <td>${formatDate(t.date)}</td>
+            <td>${escapeHtml(t.activity)}</td>
+            <td><span class="badge badge-blue">${escapeHtml(t.type)}</span></td>
+            <td><span class="badge badge-green">+${Number(t.credits).toFixed(2)}</span></td>
+            <td>${balance.toFixed(2)}</td>
+        </tr>`).join("");
+    document.getElementById("studentHistoryTable").innerHTML = rows || `<tr><td colspan="5" style="text-align:center;color:#64748b">No event credits yet.</td></tr>`;
+    const recent = transactions.slice(0,5).map(t => `
+        <tr><td>${formatDate(t.date)}</td><td>${escapeHtml(t.activity)}</td><td><span class="badge badge-green">+${Number(t.credits).toFixed(2)}</span></td></tr>`).join("");
+    document.getElementById("studentRecentCredits").innerHTML = recent || `<tr><td colspan="3" style="text-align:center;color:#64748b">No event credits yet.</td></tr>`;
+}
+
+
+/* =====================================================
+   GENERAL RENDER
+===================================================== */
+
+function renderAll() {
+
+    renderAdminStudents();
+
+    renderAdminEvents();
+
+    renderTeacherEvents();
+
+    renderAdminCredits();
+    renderInterCollegeTeacher();
+    renderInterCollegeAdmin();
+
+    if(currentStudent) {
+
+        renderStudent();
+
+    }
+
+}
+
+
+/* =====================================================
+   ADMIN CREDIT HISTORY
+===================================================== */
+
+function renderAdminCredits() {
+
+    const allCreditRows = creditTransactions.map(t => {
+        const student = users.find(u => u.id === t.studentId);
+        return { date: t.date, student: student ? student.name : t.studentId, activity: t.activity, credits: Number(t.credits || 0) };
+    }).concat(interCollegeSubmissions.filter(x => x.status === "Approved").map(x => ({
+        date: x.reviewedAt ? x.reviewedAt.split("T")[0] : x.submittedAt.split("T")[0],
+        student: x.studentName, activity: `Inter-College: ${x.eventName}`, credits: Number(x.awardedCredits || 0)
+    }))).sort((a,b) => String(b.date).localeCompare(String(a.date)));
+
+    document.getElementById("adminCreditTable").innerHTML = allCreditRows.map(t => `
+        <tr>
+            <td>${formatDate(t.date)}</td>
+            <td>${escapeHtml(t.student)}</td>
+            <td>${escapeHtml(t.activity)}</td>
+            <td><span class="badge badge-green">+${t.credits.toFixed(2)}</span></td>
+        </tr>
+    `).join("");
+
+
+    document.getElementById(
+        "adminUpcomingEvents"
+    ).innerHTML =
+        events.map(e => `
+
+        <div style="
+            padding:12px;
+            border-bottom:1px solid #e2e8f0;
+        ">
+
+            <strong>${e.name}</strong>
+
+            <br>
+
+            <small style="color:#64748b">
+
+                ${formatDate(e.date)}
+                · ${e.credits} credits
+
+            </small>
+
+        </div>
+
+        `).join("");
+
+}
+
+
+
+/* =====================================================
+   INTER-COLLEGE EVENT WORKFLOW
+===================================================== */
+function escapeHtml(value) {
+    return String(value ?? "").replace(/[&<>'"]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[ch]));
+}
+
+function populateInterCollegeAssignees() {
+    const teacherSelect = document.getElementById("icTeacherIncharge");
+    const mentorSelect = document.getElementById("icMentorIncharge");
+    if (teacherSelect) {
+        const current = teacherSelect.value;
+        teacherSelect.innerHTML = `<option value="">Select teacher</option>` +
+            teacherCredentials.map(t => `<option value="${escapeHtml(t.email)}" data-name="${escapeHtml(t.name)}">${escapeHtml(t.name)} — ${escapeHtml(t.department || "Faculty")}</option>`).join("");
+        if (current) teacherSelect.value = current;
+    }
+    if (mentorSelect) {
+        const current = mentorSelect.value;
+        mentorSelect.innerHTML = `<option value="">Select mentor in-charge</option>` +
+            adminCredentials.map(a => `<option value="${escapeHtml(a.email)}" data-name="${escapeHtml(a.name)}">${escapeHtml(a.name)}</option>`).join("");
+        if (current) mentorSelect.value = current;
+    }
+}
+
+function validateCertificateFile(input) {
+    const file = input && input.files ? input.files[0] : null;
+    const removeBtn = input ? document.getElementById(input.id + "Remove") : null;
+    if (!file) {
+        if (removeBtn) removeBtn.style.display = "none";
+        return true;
+    }
+    if (!file.type.startsWith("image/")) {
+        alert("Please select an image file only.");
+        input.value = "";
+        if (removeBtn) removeBtn.style.display = "none";
+        return false;
+    }
+    if (file.size > 200 * 1024) {
+        alert("Certificate image must be under 200 KB.");
+        input.value = "";
+        if (removeBtn) removeBtn.style.display = "none";
+        return false;
+    }
+    if (removeBtn) removeBtn.style.display = "inline-flex";
+    return true;
+}
+
+function removeCertificateFile(inputId) {
+    const input = document.getElementById(inputId);
+    if (input) input.value = "";
+    const removeBtn = document.getElementById(inputId + "Remove");
+    if (removeBtn) removeBtn.style.display = "none";
+}
+
+function fileToDataUrl(file) {
+    return new Promise((resolve, reject) => {
+        if (!file) return resolve("");
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = () => reject(new Error("Could not read certificate image."));
+        reader.readAsDataURL(file);
+    });
+}
+
+async function submitInterCollegeEvent(e) {
+    e.preventDefault();
+    if (!currentStudent) return;
+    const teacherSelect = document.getElementById("icTeacherIncharge");
+    const mentorSelect = document.getElementById("icMentorIncharge");
+    const winning = document.getElementById("icWinningCertificate").files[0];
+    const participation = document.getElementById("icParticipationCertificate").files[0];
+    if (winning && !validateCertificateFile(document.getElementById("icWinningCertificate"))) return;
+    if (participation && !validateCertificateFile(document.getElementById("icParticipationCertificate"))) return;
+    if (!teacherSelect.value || !mentorSelect.value) {
+        alert("Please select both the Teacher In-charge and Mentor In-charge.");
+        return;
+    }
+    if (!winning && !participation) {
+        if (!confirm("No certificate image has been uploaded. Submit the record anyway?")) return;
+    }
+    const teacher = teacherCredentials.find(t => normalizeEmail(t.email) === normalizeEmail(teacherSelect.value));
+    const mentor = adminCredentials.find(a => normalizeEmail(a.email) === normalizeEmail(mentorSelect.value));
+    const submission = {
+        id: "IC" + Date.now().toString(36).toUpperCase(),
+        studentId: currentStudent.id,
+        studentName: currentStudent.name,
+        studentEmail: currentStudent.email,
+        collegeName: document.getElementById("icCollegeName").value.trim(),
+        festName: document.getElementById("icFestName").value.trim(),
+        eventName: document.getElementById("icEventName").value.trim(),
+        teacherIncharge: teacher ? teacher.name : teacherSelect.options[teacherSelect.selectedIndex].text,
+        teacherEmail: teacher ? teacher.email : teacherSelect.value,
+        mentorIncharge: mentor ? mentor.name : mentorSelect.options[mentorSelect.selectedIndex].text,
+        mentorEmail: mentor ? mentor.email : mentorSelect.value,
+        winningCertificate: await fileToDataUrl(winning),
+        participationCertificate: await fileToDataUrl(participation),
+        status: "Pending",
+        awardedCredits: 0,
+        teacherComment: "",
+        submittedAt: new Date().toISOString(),
+        reviewedAt: "",
+        reviewedBy: ""
+    };
+    interCollegeSubmissions.push(submission);
+    saveAppData();
+    e.target.reset();
+    removeCertificateFile("icWinningCertificate");
+    removeCertificateFile("icParticipationCertificate");
+    populateInterCollegeAssignees();
+    renderInterCollegeStudent();
+    alert("Inter-college event submitted successfully. It has been sent to the selected Teacher In-charge for verification.");
+}
+
+function deleteInterCollegeSubmission(id) {
+    const item = interCollegeSubmissions.find(x => x.id === id);
+    if (!item) return;
+    if (!currentStudent || String(item.studentId) !== String(currentStudent.id)) return;
+    if (item.status !== "Pending") {
+        alert("This submission has already been reviewed and can no longer be deleted.");
+        return;
+    }
+    if (!confirm("Delete this inter-college event submission? This cannot be undone.")) return;
+    interCollegeSubmissions = interCollegeSubmissions.filter(x => x.id !== id);
+    saveAppData();
+    renderInterCollegeStudent();
+}
+
+function certificateButton(submission, field, label) {
+    return submission[field] ? `<button type="button" class="btn btn-secondary" onclick="viewCertificate('${submission.id}','${field}')">🖼️ ${label}</button>` : `<span style="color:#94a3b8;font-size:13px">No ${label.toLowerCase()} uploaded</span>`;
+}
+
+function viewCertificate(id, field) {
+    const item = interCollegeSubmissions.find(x => x.id === id);
+    if (!item || !item[field]) return;
+    document.getElementById("certificateModalTitle").textContent = field === "winningCertificate" ? "Winning Certificate" : "Participation Certificate";
+    document.getElementById("certificateModalBody").innerHTML = `<div style="text-align:center"><img src="${item[field]}" alt="Certificate" style="max-width:100%;max-height:70vh;border-radius:12px;border:1px solid #e2e8f0;box-shadow:0 8px 30px rgba(15,23,42,.12)"></div>`;
+    document.getElementById("certificateModal").style.display = "flex";
+}
+function closeCertificateModal() { document.getElementById("certificateModal").style.display = "none"; }
+
+function renderInterCollegeStudent() {
+    const area = document.getElementById("studentInterCollegeArea");
+    if (!area || !currentStudent) return;
+    const mine = interCollegeSubmissions.filter(x => x.studentId === currentStudent.id).slice().reverse();
+    area.innerHTML = mine.length ? `<div class="table-wrapper"><table><thead><tr><th>College</th><th>Fest</th><th>Event</th><th>Teacher</th><th>Mentor</th><th>Certificates</th><th>Status</th><th>Credits</th><th>Actions</th></tr></thead><tbody>${mine.map(x => `<tr><td>${escapeHtml(x.collegeName)}</td><td>${escapeHtml(x.festName)}</td><td>${escapeHtml(x.eventName)}</td><td>${escapeHtml(x.teacherIncharge)}</td><td>${escapeHtml(x.mentorIncharge)}</td><td style="display:flex;gap:6px;flex-wrap:wrap">${certificateButton(x,"winningCertificate","Winning")}${certificateButton(x,"participationCertificate","Participation")}</td><td><span class="badge ${x.status === "Approved" ? "badge-green" : x.status === "Rejected" ? "badge-red" : "badge-orange"}">${escapeHtml(x.status)}</span></td><td>${Number(x.awardedCredits || 0).toFixed(2)}</td><td>${x.status === "Pending" ? `<button type="button" class="btn btn-secondary" onclick="deleteInterCollegeSubmission('${x.id}')">🗑️ Delete</button>` : `<span style="color:#94a3b8;font-size:13px">Reviewed</span>`}</td></tr>`).join("")}</tbody></table></div>` : `<div style="padding:30px;text-align:center;color:#64748b">No inter-college submissions yet.</div>`;
+}
+
+function renderInterCollegeTeacher() {
+    const area = document.getElementById("teacherInterCollegeArea");
+    const count = document.getElementById("teacherInterCollegeCount");
+    if (!area || !currentTeacher) return;
+
+    // A background sync refreshes this panel every few seconds so approvals made
+    // elsewhere show up promptly. That refresh used to overwrite this innerHTML
+    // while a teacher was still typing into "Credits to Award" / the comment box,
+    // making the value vanish mid-keystroke. Capture whatever has been typed (and
+    // which field currently has focus/cursor position) before rebuilding the HTML,
+    // then restore it afterwards.
+    const preservedValues = {};
+    let focusedId = null, selectionStart = null, selectionEnd = null;
+    area.querySelectorAll('input[id^="icCredits_"], input[id^="icComment_"]').forEach(el => {
+        if (el.value !== "") preservedValues[el.id] = el.value;
+        if (document.activeElement === el) {
+            focusedId = el.id;
+            selectionStart = el.selectionStart;
+            selectionEnd = el.selectionEnd;
+        }
+    });
+
+    const mine = interCollegeSubmissions.filter(x => normalizeEmail(x.teacherEmail || "") === normalizeEmail(currentTeacher.email || ""));
+    const pending = mine.filter(x => x.status === "Pending").length;
+    if (count) count.textContent = `${pending} Pending`;
+    area.innerHTML = mine.length ? mine.slice().reverse().map(x => `
+        <div class="panel" style="border:1px solid #e2e8f0;margin-bottom:14px">
+            <div class="panel-header"><div><h3>${escapeHtml(x.eventName)}</h3><p style="color:#64748b;margin-top:5px">${escapeHtml(x.festName)} · ${escapeHtml(x.collegeName)} · ${escapeHtml(x.studentName)}</p></div><span class="badge ${x.status === "Approved" ? "badge-green" : x.status === "Rejected" ? "badge-red" : "badge-orange"}">${escapeHtml(x.status)}</span></div>
+            <div class="grid-2" style="margin-bottom:12px"><div><strong>Teacher In-charge:</strong> ${escapeHtml(x.teacherIncharge)}<br><strong>Mentor In-charge:</strong> ${escapeHtml(x.mentorIncharge)}</div><div><strong>Submitted:</strong> ${new Date(x.submittedAt).toLocaleString("en-IN")}${x.awardedCredits ? `<br><strong>Credits:</strong> ${Number(x.awardedCredits).toFixed(2)}` : ""}</div></div>
+            <div style="display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px">${certificateButton(x,"winningCertificate","Open Winning Certificate")}${certificateButton(x,"participationCertificate","Open Participation Certificate")}</div>
+            ${x.status === "Pending" ? `<div class="grid-2"><div class="form-group"><label>Credits to Award</label><input type="number" min="0" step="0.5" id="icCredits_${x.id}" placeholder="Enter credits"></div><div class="form-group"><label>Review Comment (optional)</label><input type="text" id="icComment_${x.id}" placeholder="Verification note"></div></div><div style="display:flex;gap:8px"><button class="btn btn-primary" onclick="reviewInterCollege('${x.id}','approve')">✓ Approve & Award Credits</button><button class="btn btn-danger" onclick="reviewInterCollege('${x.id}','reject')">✕ Reject</button></div>` : `<div style="color:#64748b;font-size:13px">Reviewed by ${escapeHtml(x.reviewedBy || "Teacher")} on ${x.reviewedAt ? new Date(x.reviewedAt).toLocaleString("en-IN") : "-"}${x.teacherComment ? ` · ${escapeHtml(x.teacherComment)}` : ""}</div>`}
+        </div>`).join("") : `<div style="padding:30px;text-align:center;color:#64748b">No inter-college submissions have been assigned to you.</div>`;
+
+    Object.keys(preservedValues).forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.value = preservedValues[id];
+    });
+    if (focusedId) {
+        const el = document.getElementById(focusedId);
+        if (el) {
+            el.focus();
+            try { el.setSelectionRange(selectionStart, selectionEnd); } catch (_) {}
+        }
+    }
+}
+
+function reviewInterCollege(id, action) {
+    const item = interCollegeSubmissions.find(x => x.id === id);
+    if (!item || !currentTeacher) return;
+    if (normalizeEmail(item.teacherEmail || "") !== normalizeEmail(currentTeacher.email || "")) { alert("This submission is not assigned to you."); return; }
+    if (item.status !== "Pending") { alert("This submission has already been reviewed."); return; }
+    const commentEl = document.getElementById(`icComment_${id}`);
+    const comment = commentEl ? commentEl.value.trim() : "";
+    if (action === "reject") {
+        if (!confirm("Reject this inter-college event submission?")) return;
+        item.status = "Rejected";
+        item.awardedCredits = 0;
+        item.teacherComment = comment;
+        item.reviewedBy = currentTeacher.name;
+        item.reviewedAt = new Date().toISOString();
+    } else {
+        const creditsEl = document.getElementById(`icCredits_${id}`);
+        const credits = Number(creditsEl ? creditsEl.value : 0);
+        if (!Number.isFinite(credits) || credits <= 0) { alert("Enter the credits to award."); return; }
+        const student = users.find(u => u.id === item.studentId);
+        if (!student) { alert("Student record not found."); return; }
+        item.status = "Approved";
+        item.awardedCredits = credits;
+        item.teacherComment = comment;
+        item.reviewedBy = currentTeacher.name;
+        item.reviewedAt = new Date().toISOString();
+        student.credits = Number(student.credits || 0) + credits;
+    }
+    saveAppData();
+    renderInterCollegeTeacher();
+    renderInterCollegeAdmin();
+    if (currentStudent) renderStudent();
+    alert(action === "approve" ? `Approved. ${item.awardedCredits} credit(s) awarded and the record has been routed to the mentor/admin.` : "Submission rejected.");
+}
+
+function renderInterCollegeAdmin() {
+    const area = document.getElementById("adminInterCollegeArea");
+    const count = document.getElementById("adminInterCollegeCount");
+    if (!area || !currentAdmin) return;
+    const mine = interCollegeSubmissions.filter(x => normalizeEmail(x.mentorEmail || "") === normalizeEmail(currentAdmin.email || ""));
+    const approved = mine.filter(x => x.status === "Approved").length;
+    if (count) count.textContent = `${approved} Approved`;
+    area.innerHTML = mine.length ? `<div class="table-wrapper"><table><thead><tr><th>Student</th><th>College</th><th>Fest / Event</th><th>Teacher In-charge</th><th>Certificates</th><th>Status</th><th>Credits</th><th>Reviewed</th></tr></thead><tbody>${mine.slice().reverse().map(x => `<tr><td><strong>${escapeHtml(x.studentName)}</strong><br><small>${escapeHtml(x.studentEmail)}</small></td><td>${escapeHtml(x.collegeName)}</td><td>${escapeHtml(x.festName)}<br>${escapeHtml(x.eventName)}</td><td>${escapeHtml(x.teacherIncharge)}</td><td style="display:flex;gap:6px;flex-wrap:wrap">${certificateButton(x,"winningCertificate","Winning")}${certificateButton(x,"participationCertificate","Participation")}</td><td><span class="badge ${x.status === "Approved" ? "badge-green" : x.status === "Rejected" ? "badge-red" : "badge-orange"}">${escapeHtml(x.status)}</span></td><td>${Number(x.awardedCredits || 0).toFixed(2)}</td><td>${x.reviewedAt ? new Date(x.reviewedAt).toLocaleString("en-IN") : "Awaiting teacher review"}</td></tr>`).join("")}</tbody></table></div>` : `<div style="padding:30px;text-align:center;color:#64748b">No inter-college records have been routed to you yet.</div>`;
+}
+
+/* =====================================================
+   DATE FORMAT
+===================================================== */
+
+function formatDate(date) {
+
+    if(!date) return "-";
+
+
+    const d =
+        new Date(date + "T00:00:00");
+
+
+    return d.toLocaleDateString(
+        "en-IN",
+        {
+            day: "2-digit",
+            month: "short",
+            year: "numeric"
+        }
+    );
+
+}
+
+
+async function syncServerState() {
+    if (!currentAdmin && !currentTeacher && !currentStudent) return;
+
+    // Polling must never race a local save or overwrite fields while the
+    // user is actively changing data.
+    if (saveInFlight || saveTimer || Date.now() - localMutationAt < 1200) return;
+
+    try {
+        const response = await fetch("/api/bootstrap", {cache:"no-store"});
+        if (!response.ok) return;
+        const data = await response.json();
+
+        events = data.events || [];
+        registrations = data.registrations || [];
+        attendance = data.attendance || [];
+        creditTransactions = data.creditTransactions || [];
+        interCollegeSubmissions = data.interCollegeSubmissions || [];
+        users = (data.students || []).map(s => ({
+            ...s,
+            avatar: s.avatar || String(s.name || "").split(/\s+/).filter(Boolean).map(n=>n[0]).slice(0,2).join("")
+        }));
+
+        if (currentStudent) currentStudent = users.find(u=>u.id===currentStudent.id) || currentStudent;
+        renderAll();
+    } catch (e) {
+        console.warn("Server sync:", e);
+    }
+}
+
+/* =====================================================
+   INITIALIZATION
+===================================================== */
+
+loadAppData().then(() => renderAll());
+
+setInterval(syncServerState, 5000);
+
+document.addEventListener("DOMContentLoaded", function() {
+    const createForm = document.getElementById("createEventForm");
+    if (createForm) {
+        createForm.addEventListener("submit", function(e) {
+            e.preventDefault();
+            createEvent(e);
+        });
+    }
+});
+
+</script>
+
+</body>
+</html>

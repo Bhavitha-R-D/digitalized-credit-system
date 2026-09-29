@@ -1,0 +1,78 @@
+COLLEGE CREDIT BANK — TEST DATA UPDATE REPORT
+============================================================
+IMPORTANT: Existing records were preserved. New records use new IDs beginning with EVTTEST26, REGTEST26 and IC_TEST_26.
+Original database backup is included as database/college_credit_bank_before_test_data.sqlite for recovery/reference only; the app uses database/college_credit_bank.sqlite.
+
+EXISTING DATA PRESERVED
+- 3 original college events
+- 3 original registrations (S1)
+- 3 original attendance records
+- 2 original credit transactions
+- 1 original inter-collegiate submission
+
+NEW COLLEGE EVENTS
+EVTTEST26001 | Tech Innovation Challenge | Teacher: Ms. Anitha Murthy R | Venue: Auditorium | Credits: 5.0 | 2026-10-01 09:00-11:00
+EVTTEST26002 | Web Development Workshop | Teacher: Ms. Neeta Georphin | Venue: Computer Lab 1 | Credits: 3.0 | 2026-10-02 10:00-12:00
+EVTTEST26003 | Digital Marketing Seminar | Teacher: Ms. Sheril Sophia D'couto | Venue: Room No. 1 | Credits: 2.0 | 2026-10-03 09:30-11:00
+EVTTEST26004 | Python Programming Workshop | Teacher: Dr. Srinivas Narasegouda | Venue: Computer Lab 2 | Credits: 4.0 | 2026-10-04 10:00-12:00
+EVTTEST26005 | Entrepreneurship Summit | Teacher: Ms. Celestine Jeena J | Venue: Quadrangle | Credits: 5.0 | 2026-10-05 09:00-12:00
+EVTTEST26006 | Cyber Security Awareness | Teacher: Mr. Deepak K R | Venue: Room No. 2 | Credits: 3.0 | 2026-10-06 11:00-12:30
+EVTTEST26007 | Data Analytics Bootcamp | Teacher: Ms. M. Hemalatha | Venue: Computer Lab 1 | Credits: 4.0 | 2026-10-07 10:00-13:00
+EVTTEST26008 | Communication Skills Workshop | Teacher: Ms. Vandana. R | Venue: Room No. 1 | Credits: 2.0 | 2026-10-08 09:30-11:30
+EVTTEST26009 | AI and Machine Learning Seminar | Teacher: Ms. Steffi. P | Venue: Auditorium | Credits: 5.0 | 2026-10-09 10:00-12:00
+EVTTEST26010 | Green Campus Initiative | Teacher: Dr. J.Jeyaboopathiraja | Venue: Quadrangle | Credits: 3.0 | 2026-10-10 09:00-11:00
+
+NEW REGISTRATION/ATTENDANCE DISTRIBUTION
+Tech Innovation Challenge | Ms. Anitha Murthy R | Auditorium | 5.0 credits | Registrations: 15 | Present: 10 | Absent: 5
+Web Development Workshop | Ms. Neeta Georphin | Computer Lab 1 | 3.0 credits | Registrations: 15 | Present: 10 | Absent: 5
+Digital Marketing Seminar | Ms. Sheril Sophia D'couto | Room No. 1 | 2.0 credits | Registrations: 0 | Present: 0 | Absent: 0
+Python Programming Workshop | Dr. Srinivas Narasegouda | Computer Lab 2 | 4.0 credits | Registrations: 15 | Present: 10 | Absent: 5
+Entrepreneurship Summit | Ms. Celestine Jeena J | Quadrangle | 5.0 credits | Registrations: 0 | Present: 0 | Absent: 0
+Cyber Security Awareness | Mr. Deepak K R | Room No. 2 | 3.0 credits | Registrations: 0 | Present: 0 | Absent: 0
+Data Analytics Bootcamp | Ms. M. Hemalatha | Computer Lab 1 | 4.0 credits | Registrations: 15 | Present: 10 | Absent: 5
+Communication Skills Workshop | Ms. Vandana. R | Room No. 1 | 2.0 credits | Registrations: 0 | Present: 0 | Absent: 0
+AI and Machine Learning Seminar | Ms. Steffi. P | Auditorium | 5.0 credits | Registrations: 15 | Present: 5 | Absent: 10
+Green Campus Initiative | Dr. J.Jeyaboopathiraja | Quadrangle | 3.0 credits | Registrations: 0 | Present: 0 | Absent: 0
+
+25 RANDOM EXISTING STUDENTS USED FOR COLLEGE EVENT REGISTRATIONS
+S10 | APOORVA DHANANJAYA | Web Development Workshop (Present, 3.0 cr if Present); Data Analytics Bootcamp (Present, 4.0 cr if Present); AI and Machine Learning Seminar (Absent, 5.0 cr if Present)
+
+ATTENDANCE/CREDIT TOTALS FOR NEW COLLEGE EVENTS
+New registrations: 75
+Present: 45
+Absent: 30
+Credits awarded from new Present college attendance: 185.0
+
+10 RANDOM EXISTING STUDENTS WITH INTER-COLLEGIATE SUBMISSIONS
+IC_TEST_26001 | S6 ALIZA LEPCHA | Christ University, Bengaluru South | Fest: South Bengaluru Hackathon | Event: Coding Sprint | Teacher: Dr. Srinivas Narasegouda | Status: Approved | Credits: 3.0
+IC_TEST_26002 | S40 PREETI KUMARI MISHRA | PES University, Bengaluru South | Fest: Inter-Collegiate Coding Challenge | Event: Code Arena | Teacher: Ms. Celestine Jeena J | Status: Approved | Credits: 3.0
+IC_TEST_26003 | S37 MUSFIRAH UMAIMA | RV College of Engineering, Bengaluru South | Fest: Bengaluru South Tech Symposium | Event: Tech Talk | Teacher: Mr. Deepak K R | Status: Approved | Credits: 3.0
+IC_TEST_26004 | S28 KEERTHANA S | BMS College of Engineering, Bengaluru South | Fest: Inter-Collegiate Data Science Challenge | Event: Data Quest | Teacher: Ms. M. Hemalatha | Status: Approved | Credits: 3.0
+IC_TEST_26005 | S4 AFYA HUSSAINI | Jyoti Nivas College, Bengaluru South | Fest: South Bengaluru Innovation Fest | Event: Innovation Expo | Teacher: Ms. Vandana. R | Status: Approved | Credits: 3.0
+IC_TEST_26006 | S49 SHALINI E | NMKRV College for Women, Bengaluru South | Fest: Inter-Collegiate Cultural Fest | Event: Cultural Showcase | Teacher: Ms. Steffi. P | Status: Approved | Credits: 3.0
+IC_TEST_26007 | S18 DIVYANSHI G | Dayananda Sagar University, Bengaluru South | Fest: Entrepreneurship Meet | Event: Startup Pitch | Teacher: Dr. J.Jeyaboopathiraja | Status: Approved | Credits: 3.0
+IC_TEST_26008 | S24 JAVERIYA N KHAN   | Jain University, Bengaluru South | Fest: Inter-Collegiate AI Challenge | Event: AI Vision | Teacher: Ms. Anitha Murthy R | Status: Approved | Credits: 3.0
+IC_TEST_26009 | S31 MADHUMITHA B | The Oxford College of Engineering, Bengaluru South | Fest: South Bengaluru Project Expo | Event: Project Presentation | Teacher: Ms. Neeta Georphin | Status: Approved | Credits: 3.0
+IC_TEST_26010 | S36 MUNIPRIYA T | S.S.M.R.V. College, Bengaluru South | Fest: Inter-Collegiate Sports and Wellness Meet | Event: Sports Challenge | Teacher: Ms. Sheril Sophia D'couto | Status: Approved | Credits: 3.0
+
+INTER-COLLEGIATE TOTAL
+10 submissions | 10 Approved | 3 credits each | 30 inter-collegiate credits awarded
+
+FINAL DATABASE COUNTS
+students: 60
+teachers: 111
+events: 13
+registrations: 78
+attendance: 78
+credit_transactions: 47
+inter_college_submissions: 11
+
+SAFETY CHECK
+Original IDs EVT1790137999898, EVT1790138055418, EVT1790138134602 unchanged.
+Original registration IDs REG001, REG002, REG003 unchanged.
+Original attendance records for S1 unchanged.
+Original credit transactions 1 and 3 unchanged.
+Original inter-collegiate submission ICMUDM2VGA unchanged.
+No DELETE or DROP operation was used while adding the test data.
+
+Note: The app database is SQLite, not MySQL, in this uploaded project. The data is stored in database/college_credit_bank.sqlite and the Node/Express server loads that file.
